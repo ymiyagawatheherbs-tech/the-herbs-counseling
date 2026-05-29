@@ -47,22 +47,22 @@ export default function PartnerPage() {
   return (
     <div className="min-h-screen" style={{ background: "var(--herbs-page-bg)" }}>
       {/* ヘッダー */}
-      <header style={{ background: "var(--herbs-green)", padding: "14px 20px" }}>
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+      <header style={{ background: "var(--herbs-green)", padding: "12px 16px" }}>
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div>
             <div style={{ fontSize: "10px", letterSpacing: "0.2em", color: "var(--herbs-gold)", fontFamily: "'Cormorant Garamond', serif" }}>THE HERBS</div>
-            <h1 style={{ fontSize: "15px", fontWeight: 400, color: "white", letterSpacing: "0.05em" }}>
+            <h1 style={{ fontSize: "14px", fontWeight: 400, color: "white", letterSpacing: "0.05em" }}>
               {session.salonName || "パートナーサロン"} 専用画面
             </h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={() => navigate(`/types`)}
-              style={{ fontSize: "12px", color: "white", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 12px", cursor: "pointer" }}>
+              style={{ fontSize: "12px", color: "white", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 10px", cursor: "pointer", whiteSpace: "nowrap" }}>
               カウンセリングを始める
             </button>
             <button onClick={() => { clearSession(); navigate("/"); }}
-              style={{ fontSize: "12px", color: "rgba(255,255,255,0.7)", background: "none", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 12px", cursor: "pointer" }}>
+              style={{ fontSize: "12px", color: "rgba(255,255,255,0.7)", background: "none", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 10px", cursor: "pointer", whiteSpace: "nowrap" }}>
               ログアウト
             </button>
           </div>
@@ -100,8 +100,8 @@ export default function PartnerPage() {
             </button>
           </div>
         ) : (
-          <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", background: "var(--herbs-white)" }}>
+          <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)", overflowX: "auto" }}>
+            <table style={{ width: "100%", minWidth: 560, borderCollapse: "collapse", background: "var(--herbs-white)" }}>
               <thead>
                 <tr style={{ background: "var(--herbs-cream)", borderBottom: "1px solid var(--herbs-light)" }}>
                   {["お名前", "体質タイプ", "外胚葉", "中胚葉", "内胚葉", "経路", "日時"].map(h => (
@@ -147,7 +147,7 @@ export default function PartnerPage() {
               <h3 style={{ fontSize: "15px", fontWeight: 500, color: "var(--herbs-green)" }}>{selected.clientName} 様の詳細</h3>
               <button onClick={() => setSelectedId(null)} style={{ background: "none", border: "none", color: "var(--herbs-muted)", cursor: "pointer", fontSize: "18px" }}>×</button>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {selected.clientKana && <Detail label="ふりがな" value={selected.clientKana} />}
               {selected.clientDob && <Detail label="生年月日" value={selected.clientDob} />}
               {selected.clientJob && <Detail label="ご職業" value={selected.clientJob} />}

@@ -30,8 +30,8 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen" style={{ background: "var(--herbs-page-bg)" }}>
       {/* ヘッダー */}
-      <header style={{ background: "var(--herbs-green)", padding: "14px 20px" }}>
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
+      <header style={{ background: "var(--herbs-green)", padding: "12px 16px" }}>
+        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div>
             <div style={{ fontSize: "10px", letterSpacing: "0.2em", color: "var(--herbs-gold)", fontFamily: "'Cormorant Garamond', serif" }}>THE HERBS</div>
             <h1 style={{ fontSize: "16px", fontWeight: 400, color: "white", letterSpacing: "0.08em" }}>管理画面</h1>
@@ -102,8 +102,8 @@ function SessionsTab({ search, setSearch }: { search: string; setSearch: (s: str
       ) : filtered.length === 0 ? (
         <div className="text-center py-12" style={{ color: "var(--herbs-muted)" }}>データがありません</div>
       ) : (
-        <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", background: "var(--herbs-white)" }}>
+        <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)", overflowX: "auto" }}>
+          <table style={{ width: "100%", minWidth: 560, borderCollapse: "collapse", background: "var(--herbs-white)" }}>
             <thead>
               <tr style={{ background: "var(--herbs-cream)", borderBottom: "1px solid var(--herbs-light)" }}>
                 {["お名前", "体質タイプ", "外胚葉", "中胚葉", "内胚葉", "経路", "日時"].map(h => (
@@ -149,7 +149,7 @@ function SessionsTab({ search, setSearch }: { search: string; setSearch: (s: str
             <h3 style={{ fontSize: "15px", fontWeight: 500, color: "var(--herbs-green)" }}>{selected.clientName} 様の詳細</h3>
             <button onClick={() => setSelectedId(null)} style={{ background: "none", border: "none", color: "var(--herbs-muted)", cursor: "pointer", fontSize: "18px" }}>×</button>
           </div>
-          <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
             <Detail label="ふりがな" value={selected.clientKana} />
             <Detail label="生年月日" value={selected.clientDob} />
             <Detail label="ご職業" value={selected.clientJob} />
@@ -345,8 +345,8 @@ function PasscodesTab() {
       </div>
 
       {/* 一覧 */}
-      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", background: "var(--herbs-white)" }}>
+      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)", overflowX: "auto" }}>
+        <table style={{ width: "100%", minWidth: 480, borderCollapse: "collapse", background: "var(--herbs-white)" }}>
           <thead>
             <tr style={{ background: "var(--herbs-cream)", borderBottom: "1px solid var(--herbs-light)" }}>
               {["パスコード", "種別", "ラベル", "状態", "操作"].map(h => (
@@ -442,8 +442,8 @@ function SalonsTab() {
       </div>
 
       {/* 一覧 */}
-      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", background: "var(--herbs-white)" }}>
+      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--herbs-light)", overflowX: "auto" }}>
+        <table style={{ width: "100%", minWidth: 400, borderCollapse: "collapse", background: "var(--herbs-white)" }}>
           <thead>
             <tr style={{ background: "var(--herbs-cream)", borderBottom: "1px solid var(--herbs-light)" }}>
               {["サロン名", "パスコード", "状態", "登録日"].map(h => (
