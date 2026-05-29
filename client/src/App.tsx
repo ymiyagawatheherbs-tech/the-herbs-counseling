@@ -4,32 +4,39 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import PasscodePage from "./pages/PasscodePage";
+import TypesPage from "./pages/TypesPage";
+import CounselingPage from "./pages/CounselingPage";
+import ResultPage from "./pages/ResultPage";
+import AdminPage from "./pages/AdminPage";
+import PartnerPage from "./pages/PartnerPage";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
+      {/* トップ = パスコード入力 */}
+      <Route path={"/"} component={PasscodePage} />
+      {/* 体質タイプ紹介 */}
+      <Route path={"/types"} component={TypesPage} />
+      {/* カウンセリングシート */}
+      <Route path={"/counseling"} component={CounselingPage} />
+      {/* 診断結果 */}
+      <Route path={"/result"} component={ResultPage} />
+      {/* 管理者画面 */}
+      <Route path={"/admin"} component={AdminPage} />
+      {/* パートナーサロン画面 */}
+      <Route path={"/partner"} component={PartnerPage} />
+      {/* 404 */}
       <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
           <Router />
