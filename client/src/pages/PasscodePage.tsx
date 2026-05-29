@@ -34,7 +34,8 @@ export default function PasscodePage() {
       } else if (result.type === "partner") {
         navigate("/partner");
       } else {
-        navigate(`/types?ch=${channel}`);
+        // 一般パスコードの場合はトップ（体質タイプ紹介）へ
+        navigate(`/?ch=${channel}`);
       }
     } catch {
       setError("パスコードが正しくありません。もう一度お確かめください。");
@@ -121,9 +122,13 @@ export default function PasscodePage() {
         </div>
 
         <p style={{ fontSize: "11px", color: "var(--herbs-muted)", textAlign: "center", marginTop: "20px", lineHeight: 1.8 }}>
-          パスコードをお持ちでない方は<br />
-          THE HERBSの各店舗またはSNSよりご確認ください
+          スタッフ・パートナーサロン専用のページです
         </p>
+        <div style={{ textAlign: "center", marginTop: "12px" }}>
+          <button onClick={() => navigate("/")} style={{ fontSize: "12px", color: "var(--herbs-green)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>
+            アンケートトップへ戻る
+          </button>
+        </div>
       </div>
     </div>
   );

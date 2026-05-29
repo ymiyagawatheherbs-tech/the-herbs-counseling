@@ -44,7 +44,16 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const clearSession = () => setSession(null);
+  const clearSession = () => {
+    setSession(null);
+    // サーバー側のhttpOnly Cookieも削除
+    fetch("/api/trpc/passcode.logout", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ "0": { json: null } }),
+    }).catch(() => {});
+  };
 
   return (
     <SessionContext.Provider value={{

@@ -14,17 +14,17 @@ import PartnerPage from "./pages/PartnerPage";
 function Router() {
   return (
     <Switch>
-      {/* トップ = パスコード入力 */}
-      <Route path={"/"} component={PasscodePage} />
-      {/* 体質タイプ紹介 */}
-      <Route path={"/types"} component={TypesPage} />
-      {/* カウンセリングシート */}
+      {/* トップ = 体質タイプ紹介（パスコードなし） */}
+      <Route path={"/"} component={TypesPage} />
+      {/* カウンセリングシート（パスコードなし） */}
       <Route path={"/counseling"} component={CounselingPage} />
-      {/* 診断結果 */}
+      {/* 診断結果（パスコードなし） */}
       <Route path={"/result"} component={ResultPage} />
-      {/* 管理者画面 */}
+      {/* 管理者・スタッフ用ログイン */}
+      <Route path={"/login"} component={PasscodePage} />
+      {/* 管理者画面（パスコード必須） */}
       <Route path={"/admin"} component={AdminPage} />
-      {/* パートナーサロン画面 */}
+      {/* パートナーサロン画面（パスコード必須） */}
       <Route path={"/partner"} component={PartnerPage} />
       {/* 404 */}
       <Route path={"/404"} component={NotFound} />

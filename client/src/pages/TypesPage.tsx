@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { useSession } from "@/contexts/SessionContext";
+
+const ILLUST_URLS: Record<string, string> = {
+  ecto: "/manus-storage/herbs-ecto_e909f0ad.png",
+  meso: "/manus-storage/herbs-meso_94923867.png",
+  endo: "/manus-storage/herbs-endo_6ed69735.png",
+};
 
 const TYPES = [
   {
@@ -10,7 +15,6 @@ const TYPES = [
     color: "#C4604A",
     bg: "#FDF0EB",
     bd: "#EDCAB8",
-    icon: "🌿",
     tagline: "繊細・敏感・軽やか",
     description: "外胚葉型の方は、神経系・皮膚・感覚器官が発達した繊細な体質です。細身で乾燥しやすく、敏感肌の傾向があります。",
     traits: [
@@ -36,7 +40,6 @@ const TYPES = [
     color: "#3A6285",
     bg: "#EBF2F8",
     bd: "#C0D8EC",
-    icon: "🌱",
     tagline: "バランス・活力・安定",
     description: "中胚葉型の方は、筋骨格系が発達したバランスの良い体質です。適度な皮脂分泌があり、頭皮も比較的健康な状態を保ちやすいです。",
     traits: [
@@ -62,7 +65,6 @@ const TYPES = [
     color: "#9A4870",
     bg: "#FDF0F5",
     bd: "#E8C0D0",
-    icon: "🌸",
     tagline: "豊か・潤い・温かみ",
     description: "内胚葉型の方は、消化器系・内分泌系が発達した体質です。皮脂分泌が多い傾向があり、頭皮のべたつきや毛穴づまりが気になることがあります。",
     traits: [
@@ -86,7 +88,6 @@ const TYPES = [
 export default function TypesPage() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [, navigate] = useLocation();
-  const { session } = useSession();
   const params = new URLSearchParams(window.location.search);
   const channel = params.get("ch") || "web";
 
@@ -95,7 +96,7 @@ export default function TypesPage() {
   return (
     <div className="min-h-screen" style={{ background: "var(--herbs-page-bg)" }}>
       {/* ヘッダー */}
-      <header style={{ background: "var(--herbs-white)", borderBottom: "1px solid var(--herbs-light)", padding: "16px 20px" }}>
+      <header style={{ background: "var(--herbs-white)", borderBottom: "1px solid var(--herbs-light)", padding: "14px 20px" }}>
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div>
             <div style={{ fontSize: "10px", letterSpacing: "0.25em", color: "var(--herbs-gold)", fontFamily: "'Cormorant Garamond', serif", textTransform: "uppercase" }}>
@@ -105,7 +106,11 @@ export default function TypesPage() {
               THE HERBS
             </h1>
           </div>
-          <div style={{ fontSize: "11px", color: "var(--herbs-muted)" }}>体質タイプ紹介</div>
+          <button
+            onClick={() => navigate("/login")}
+            style={{ fontSize: "11px", color: "var(--herbs-muted)", background: "none", border: "1px solid var(--herbs-light)", borderRadius: "6px", padding: "5px 10px", cursor: "pointer" }}>
+            スタッフ・管理者
+          </button>
         </div>
       </header>
 
@@ -151,101 +156,113 @@ export default function TypesPage() {
 
         {/* メインカード */}
         <div
-          className="rounded-2xl p-6 mb-6 animate-fade-in-up"
+          className="rounded-2xl mb-6 animate-fade-in-up overflow-hidden"
           style={{
             background: active.bg,
             border: `1.5px solid ${active.bd}`,
             boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
           }}
         >
-          {/* タイプヘッダー */}
-          <div className="flex items-start gap-4 mb-5">
+          {/* イラスト */}
+          <div style={{ position: "relative", background: "rgba(255,255,255,0.5)" }}>
+            <img
+              src={ILLUST_URLS[active.id]}
+              alt={`${active.label}のイラスト`}
+              style={{
+                width: "100%",
+                maxHeight: "320px",
+                objectFit: "cover",
+                objectPosition: "center top",
+                display: "block",
+              }}
+            />
+            {/* タイプラベルオーバーレイ */}
             <div style={{
-              width: 56, height: 56, borderRadius: "50%",
-              background: "white",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "24px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-              flexShrink: 0,
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              background: `linear-gradient(transparent, ${active.bg}dd)`,
+              padding: "24px 20px 16px",
             }}>
-              {active.icon}
-            </div>
-            <div>
               <div style={{ fontSize: "11px", color: active.color, letterSpacing: "0.15em", fontFamily: "'Cormorant Garamond', serif", marginBottom: "2px" }}>
                 {active.subtitle}
               </div>
-              <h3 style={{ fontSize: "24px", fontWeight: 400, color: active.color, letterSpacing: "0.08em", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: "26px", fontWeight: 400, color: active.color, letterSpacing: "0.08em", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.2 }}>
                 {active.label}
               </h3>
-              <div style={{ fontSize: "12px", color: active.color, opacity: 0.7, marginTop: "2px" }}>
+              <div style={{ fontSize: "12px", color: active.color, opacity: 0.8, marginTop: "2px" }}>
                 {active.tagline}
               </div>
             </div>
           </div>
 
-          {/* 説明文 */}
-          <p style={{ fontSize: "13px", color: "#444", lineHeight: 1.9, marginBottom: "20px" }}>
-            {active.description}
-          </p>
-
-          {/* 特徴リスト */}
-          <div className="mb-5">
-            <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, letterSpacing: "0.1em", marginBottom: "10px", textTransform: "uppercase" }}>
-              体質の特徴
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {active.traits.map((trait, i) => (
-                <div key={i} style={{
-                  background: "rgba(255,255,255,0.7)",
-                  borderRadius: "8px",
-                  padding: "8px 10px",
-                  fontSize: "12px",
-                  color: "#555",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}>
-                  <span style={{ color: active.color, fontSize: "10px" }}>●</span>
-                  {trait}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 髪・頭皮の特徴 */}
-          <div className="mb-5">
-            <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, letterSpacing: "0.1em", marginBottom: "10px", textTransform: "uppercase" }}>
-              髪・頭皮の特徴
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {active.hairFeatures.map((f, i) => (
-                <span key={i} style={{
-                  background: "rgba(255,255,255,0.8)",
-                  border: `1px solid ${active.bd}`,
-                  borderRadius: "20px",
-                  padding: "5px 12px",
-                  fontSize: "12px",
-                  color: active.color,
-                }}>
-                  {f}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* ケアポイント */}
-          <div style={{
-            background: "rgba(255,255,255,0.6)",
-            borderRadius: "10px",
-            padding: "12px 14px",
-            borderLeft: `3px solid ${active.color}`,
-          }}>
-            <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, marginBottom: "4px" }}>
-              THE HERBS ケアポイント
-            </div>
-            <p style={{ fontSize: "12px", color: "#555", lineHeight: 1.7 }}>
-              {active.carePoint}
+          {/* カードコンテンツ */}
+          <div className="p-5">
+            {/* 説明文 */}
+            <p style={{ fontSize: "13px", color: "#444", lineHeight: 1.9, marginBottom: "20px" }}>
+              {active.description}
             </p>
+
+            {/* 特徴リスト */}
+            <div className="mb-5">
+              <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, letterSpacing: "0.1em", marginBottom: "10px", textTransform: "uppercase" }}>
+                体質の特徴
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {active.traits.map((trait, i) => (
+                  <div key={i} style={{
+                    background: "rgba(255,255,255,0.7)",
+                    borderRadius: "8px",
+                    padding: "8px 10px",
+                    fontSize: "12px",
+                    color: "#555",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}>
+                    <span style={{ color: active.color, fontSize: "10px" }}>●</span>
+                    {trait}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 髪・頭皮の特徴 */}
+            <div className="mb-5">
+              <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, letterSpacing: "0.1em", marginBottom: "10px", textTransform: "uppercase" }}>
+                髪・頭皮の特徴
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {active.hairFeatures.map((f, i) => (
+                  <span key={i} style={{
+                    background: "rgba(255,255,255,0.8)",
+                    border: `1px solid ${active.bd}`,
+                    borderRadius: "20px",
+                    padding: "5px 12px",
+                    fontSize: "12px",
+                    color: active.color,
+                  }}>
+                    {f}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* ケアポイント */}
+            <div style={{
+              background: "rgba(255,255,255,0.6)",
+              borderRadius: "10px",
+              padding: "12px 14px",
+              borderLeft: `3px solid ${active.color}`,
+            }}>
+              <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, marginBottom: "4px" }}>
+                THE HERBS ケアポイント
+              </div>
+              <p style={{ fontSize: "12px", color: "#555", lineHeight: 1.7 }}>
+                {active.carePoint}
+              </p>
+            </div>
           </div>
         </div>
 

@@ -19,8 +19,8 @@ export default function AdminPage() {
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--herbs-page-bg)" }}>
         <div className="text-center">
           <p style={{ color: "var(--herbs-muted)", marginBottom: "16px" }}>管理者権限が必要です</p>
-          <button onClick={() => navigate("/")} style={{ padding: "10px 24px", background: "var(--herbs-green)", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>
-            トップへ戻る
+          <button onClick={() => navigate("/login")} style={{ padding: "10px 24px", background: "var(--herbs-green)", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>
+            ログインページへ
           </button>
         </div>
       </div>
@@ -36,7 +36,7 @@ export default function AdminPage() {
             <div style={{ fontSize: "10px", letterSpacing: "0.2em", color: "var(--herbs-gold)", fontFamily: "'Cormorant Garamond', serif" }}>THE HERBS</div>
             <h1 style={{ fontSize: "16px", fontWeight: 400, color: "white", letterSpacing: "0.08em" }}>管理画面</h1>
           </div>
-          <button onClick={() => { clearSession(); navigate("/"); }}
+          <button onClick={() => { clearSession(); navigate("/login"); }}
             style={{ fontSize: "12px", color: "rgba(255,255,255,0.7)", background: "none", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 12px", cursor: "pointer" }}>
             ログアウト
           </button>

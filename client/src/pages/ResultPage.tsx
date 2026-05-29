@@ -1,5 +1,12 @@
 import { useLocation } from "wouter";
 
+const ILLUST_URLS: Record<string, string> = {
+  ecto: "/manus-storage/herbs-ecto_e909f0ad.png",
+  meso: "/manus-storage/herbs-meso_94923867.png",
+  endo: "/manus-storage/herbs-endo_6ed69735.png",
+  unknown: "/manus-storage/herbs-meso_94923867.png",
+};
+
 const TYPE_INFO = {
   ecto: {
     label: "外胚葉型",
@@ -100,25 +107,26 @@ export default function ResultPage() {
         </div>
 
         {/* 主要体質タイプ */}
-        <div className="rounded-2xl p-6 mb-6 animate-fade-in-up" style={{ background: info.bg, border: `2px solid ${info.bd}`, boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
-          <div style={{ fontSize: "11px", color: info.color, letterSpacing: "0.2em", textAlign: "center", marginBottom: "4px", fontFamily: "'Cormorant Garamond', serif" }}>
-            YOUR TYPE
-          </div>
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div style={{ fontSize: "40px" }}>{info.icon}</div>
-            <div className="text-center">
-              <div style={{ fontSize: "11px", color: info.color, letterSpacing: "0.15em", fontFamily: "'Cormorant Garamond', serif" }}>
-                {info.subtitle}
-              </div>
-              <div style={{ fontSize: "32px", fontWeight: 300, color: info.color, letterSpacing: "0.1em", fontFamily: "'Cormorant Garamond', serif" }}>
-                {info.label}
-              </div>
-              <div style={{ fontSize: "12px", color: info.color, opacity: 0.7 }}>{info.tagline}</div>
+        <div className="rounded-2xl mb-6 animate-fade-in-up overflow-hidden" style={{ background: info.bg, border: `2px solid ${info.bd}`, boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
+          {/* イラスト */}
+          <div style={{ position: "relative" }}>
+            <img
+              src={ILLUST_URLS[type] || ILLUST_URLS.ecto}
+              alt={`${info.label}のイラスト`}
+              style={{ width: "100%", maxHeight: "280px", objectFit: "cover", objectPosition: "center top", display: "block" }}
+            />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: `linear-gradient(transparent, ${info.bg}ee)`, padding: "20px 20px 14px" }}>
+              <div style={{ fontSize: "11px", color: info.color, letterSpacing: "0.2em", fontFamily: "'Cormorant Garamond', serif" }}>YOUR TYPE</div>
+              <div style={{ fontSize: "28px", fontWeight: 300, color: info.color, letterSpacing: "0.1em", fontFamily: "'Cormorant Garamond', serif" }}>{info.label}</div>
+              <div style={{ fontSize: "12px", color: info.color, opacity: 0.8 }}>{info.tagline}</div>
             </div>
           </div>
-          <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.9, textAlign: "center" }}>
-            {info.description}
-          </p>
+          <div className="p-5">
+            <div style={{ fontSize: "11px", color: info.color, letterSpacing: "0.15em", fontFamily: "'Cormorant Garamond', serif", marginBottom: "6px" }}>{info.subtitle}</div>
+            <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.9 }}>
+              {info.description}
+            </p>
+          </div>
         </div>
 
         {/* 体質タイプ判定バー */}

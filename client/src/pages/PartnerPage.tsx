@@ -19,8 +19,8 @@ export default function PartnerPage() {
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--herbs-page-bg)" }}>
         <div className="text-center">
           <p style={{ color: "var(--herbs-muted)", marginBottom: "16px" }}>パートナーサロンの権限が必要です</p>
-          <button onClick={() => navigate("/")} style={{ padding: "10px 24px", background: "var(--herbs-green)", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>
-            トップへ戻る
+          <button onClick={() => navigate("/login")} style={{ padding: "10px 24px", background: "var(--herbs-green)", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>
+            ログインページへ
           </button>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default function PartnerPage() {
               style={{ fontSize: "12px", color: "white", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 10px", cursor: "pointer", whiteSpace: "nowrap" }}>
               カウンセリングを始める
             </button>
-            <button onClick={() => { clearSession(); navigate("/"); }}
+            <button onClick={() => { clearSession(); navigate("/login"); }}
               style={{ fontSize: "12px", color: "rgba(255,255,255,0.7)", background: "none", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 10px", cursor: "pointer", whiteSpace: "nowrap" }}>
               ログアウト
             </button>

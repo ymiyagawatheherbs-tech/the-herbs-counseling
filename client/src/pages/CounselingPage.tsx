@@ -281,19 +281,19 @@ export default function CounselingPage() {
           <div className="animate-fade-in-up">
             <SectionHeader title="体質傾向チェック" subtitle="当てはまる項目をすべてお選びください" />
             <TypeCheckGroup
-              title="グループA（外胚葉型）" color="#C4604A" bg="#FDF0EB" bd="#EDCAB8"
+              title="グループA" color="#C4604A" bg="#FDF0EB" bd="#EDCAB8"
               items={ECTO_ITEMS} checked={form.ectoChecked}
               onToggle={v => toggleCheck("ectoChecked", v)}
               score={ectoScore}
             />
             <TypeCheckGroup
-              title="グループB（中胚葉型）" color="#3A6285" bg="#EBF2F8" bd="#C0D8EC"
+              title="グループB" color="#3A6285" bg="#EBF2F8" bd="#C0D8EC"
               items={MESO_ITEMS} checked={form.mesoChecked}
               onToggle={v => toggleCheck("mesoChecked", v)}
               score={mesoScore}
             />
             <TypeCheckGroup
-              title="グループC（内胚葉型）" color="#9A4870" bg="#FDF0F5" bd="#E8C0D0"
+              title="グループC" color="#9A4870" bg="#FDF0F5" bd="#E8C0D0"
               items={ENDO_ITEMS} checked={form.endoChecked}
               onToggle={v => toggleCheck("endoChecked", v)}
               score={endoScore}
