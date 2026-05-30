@@ -57,7 +57,7 @@ export default function PartnerPage() {
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             <button
-              onClick={() => navigate(`/types`)}
+              onClick={() => navigate("/")}
               style={{ fontSize: "12px", color: "white", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "6px", padding: "6px 10px", cursor: "pointer", whiteSpace: "nowrap" }}>
               カウンセリングを始める
             </button>
@@ -94,7 +94,7 @@ export default function PartnerPage() {
             <p style={{ color: "var(--herbs-muted)", fontSize: "13px", marginBottom: "16px" }}>
               まだカウンセリングデータがありません
             </p>
-            <button onClick={() => navigate("/types")}
+            <button onClick={() => navigate("/")}
               style={{ padding: "12px 28px", background: "var(--herbs-green)", color: "white", border: "none", borderRadius: "10px", fontSize: "13px", cursor: "pointer" }}>
               カウンセリングを始める
             </button>

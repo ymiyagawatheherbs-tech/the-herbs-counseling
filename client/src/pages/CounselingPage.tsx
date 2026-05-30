@@ -222,7 +222,7 @@ export default function CounselingPage() {
       <header style={{ background: "var(--herbs-white)", borderBottom: "1px solid var(--herbs-light)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10 }}>
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-2">
-            <button onClick={() => section > 1 ? setSection(s => s - 1) : navigate("/types")}
+            <button onClick={() => section > 1 ? setSection(s => s - 1) : navigate("/")}
               style={{ background: "none", border: "none", color: "var(--herbs-muted)", cursor: "pointer", fontSize: "13px" }}>
               ← 戻る
             </button>
