@@ -2,88 +2,18 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useSession } from "@/contexts/SessionContext";
-
-// ── 体質チェック項目データ ────────────────────────────────────────────────────
-const ECTO_ITEMS = [
-  "体重が増えにくい",
-  "肌が乾燥しやすい・敏感肌",
-  "子供の頃から髪が多い",
-  "末端冷え性",
-  "昔から体力がない方だと思う",
-  "周囲のことが常に気になる",
-  "食欲にムラがある",
-  "華奢だと言われたことがある",
-  "年々髪のうねりが強くなる",
-  "睡眠が浅い・眠りにくい",
-];
-const MESO_ITEMS = [
-  "筋肉がつきやすい体質だと思う",
-  "体を動かすことが好き",
-  "Tゾーン・Uゾーンはベタつくが他は乾燥",
-  "パーマがすぐに取れる",
-  "活動的な方だと思う",
-  "ストレスを感じるとイライラしてしまう",
-  "食欲はいつもある方",
-  "骨格・体格がしっかりしている方だと思う",
-  "頭皮がベタつきやすい",
-  "よく眠れる体質だと思う",
-  "我慢強い方だと思う",
-  "しっかりしているねと言われたことがある",
-];
-const ENDO_ITEMS = [
-  "太りやすい・体重が増えやすい",
-  "冬は粉が吹いたように乾燥する",
-  "髪が細く、毛先がくるんとするネコ毛",
-  "体が温かい・暑がり",
-  "穏やか・のんびりしている方だと思う",
-  "いつも笑顔だねと言われたことがある",
-  "食べることが好き",
-  "日焼けすると真っ赤になる",
-  "友人は多い方だと思う",
-  "よく眠れる・眠りが深い",
-];
-
-const SYMPTOMS = [
-  "肩こり", "腰痛", "頭痛", "冷え性", "むくみ", "疲れやすい",
-  "胃腸の不調", "便秘", "下痢", "生理不順", "更年期症状",
-  "アレルギー", "花粉症", "アトピー", "喘息", "不眠",
-  "ストレス・不安", "うつ傾向", "血圧の異常", "特になし",
-];
-
-const HAIR_CHILD_TYPES = [
-  { value: "straight", label: "直毛" },
-  { value: "wave", label: "軽いくせ毛" },
-  { value: "curly", label: "強いくせ毛・天然パーマ" },
-  { value: "thin", label: "細毛・軟毛" },
-  { value: "thick", label: "太毛・剛毛" },
-];
-
-const HAIR_TROUBLES = [
-  "抜け毛が多い", "薄毛・ボリュームダウン", "頭皮のかゆみ",
-  "頭皮の乾燥", "頭皮のべたつき", "フケ（乾性）", "フケ（脂性）",
-  "頭皮のにおい", "白髪が多い", "髪のうねり・くせ毛",
-  "枝毛・切れ毛", "ハリ・コシがない", "カラーの色落ちが早い",
-  "頭皮の炎症・赤み", "特になし",
-];
-
-const LIFESTYLE_HABITS = [
-  "喫煙している", "飲酒が多い（週3回以上）", "睡眠不足（6時間未満）",
-  "運動不足", "外食・コンビニ食が多い", "ダイエット中",
-  "デスクワーク（長時間座位）", "立ち仕事が多い", "夜型生活",
-  "ストレスが多い", "水分摂取が少ない",
-];
-
-const VISIT_REASONS = [
-  "抜け毛・薄毛が気になる",
-  "頭皮の状態を改善したい",
-  "髪のうねり・くせ毛を改善したい",
-  "頭皮ケアの習慣をつけたい",
-  "白髪が気になる",
-  "カラー後の頭皮ケア",
-  "ヘアケア製品を見直したい",
-  "体質に合ったケアを知りたい",
-  "その他",
-];
+import {
+  ECTO_ITEMS,
+  MESO_ITEMS,
+  ENDO_ITEMS,
+  SYMPTOM_CATEGORIES,
+  HAIR_CHILD_TYPES,
+  HAIR_TROUBLES,
+  LIFESTYLE_HABITS,
+  VISIT_REASONS,
+  POLLEN_TYPES,
+  calcSymptomBonus,
+} from "@shared/counselingData";
 
 // ── 型定義 ────────────────────────────────────────────────────────────────────
 interface FormData {
@@ -180,10 +110,14 @@ export default function CounselingPage() {
     }));
   };
 
-  // スコア計算
-  const ectoScore = form.ectoChecked.length;
-  const mesoScore = form.mesoChecked.length;
-  const endoScore = form.endoChecked.length;
+  // スコア計算（体質チェック + 症状ボーナス）
+  const baseEcto = form.ectoChecked.length;
+  const baseMeso = form.mesoChecked.length;
+  const baseEndo = form.endoChecked.length;
+  const { ectoBonus, mesoBonus, endoBonus } = calcSymptomBonus(form.symptoms);
+  const ectoScore = baseEcto + ectoBonus;
+  const mesoScore = baseMeso + mesoBonus;
+  const endoScore = baseEndo + endoBonus;
   const maxScore = Math.max(ectoScore, mesoScore, endoScore);
   const primaryType = maxScore === 0 ? "unknown"
     : ectoScore === maxScore ? "ecto"
@@ -201,7 +135,26 @@ export default function CounselingPage() {
         accessChannel: channel,
         partnerSalonId: session?.partnerSalonId ?? undefined,
       });
-      navigate(`/result?ecto=${ectoScore}&meso=${mesoScore}&endo=${endoScore}&name=${encodeURIComponent(form.clientName)}&type=${primaryType}&ch=${channel}`);
+      // アンケート情報をURLパラメータで結果ページに渡す
+      const resultParams = new URLSearchParams({
+        ecto: String(ectoScore),
+        meso: String(mesoScore),
+        endo: String(endoScore),
+        name: form.clientName,
+        type: primaryType,
+        ch: channel,
+        symptoms: form.symptoms.join(","),
+        lifestyle: form.lifestyleHabits.join(","),
+        hairTroubles: form.hairTroubles.join(","),
+        hasMedication: String(form.hasMedication),
+        hasPollen: String(form.hasPollen),
+        pollenTypes: form.pollenTypes.join(","),
+        colorHistory: form.colorHistory,
+        visitReason: form.visitReason,
+        hairChildType: form.hairChildType,
+        foodNotes: form.foodNotes,
+      });
+      navigate(`/result?${resultParams.toString()}`);
     } catch (err) {
       console.error(err);
       alert("送信中にエラーが発生しました。もう一度お試しください。");
@@ -260,19 +213,19 @@ export default function CounselingPage() {
               </FormField>
               <FormField label="ご職業">
                 <input type="text" value={form.clientJob} onChange={e => setForm(f => ({ ...f, clientJob: e.target.value }))}
-                  placeholder="会社員・主婦・学生など" style={inputStyle} />
+                  placeholder="例：会社員、主婦、学生" style={inputStyle} />
               </FormField>
               <FormField label="ご住所">
                 <input type="text" value={form.clientAddress} onChange={e => setForm(f => ({ ...f, clientAddress: e.target.value }))}
-                  placeholder="都道府県・市区町村" style={inputStyle} />
+                  placeholder="例：兵庫県神戸市" style={inputStyle} />
               </FormField>
-              <FormField label="電話番号（自宅）">
+              <FormField label="お電話番号">
                 <input type="tel" value={form.clientTel} onChange={e => setForm(f => ({ ...f, clientTel: e.target.value }))}
-                  placeholder="000-0000-0000" style={inputStyle} />
+                  placeholder="例：078-000-0000" style={inputStyle} />
               </FormField>
-              <FormField label="電話番号（携帯）">
+              <FormField label="携帯電話">
                 <input type="tel" value={form.clientMobile} onChange={e => setForm(f => ({ ...f, clientMobile: e.target.value }))}
-                  placeholder="000-0000-0000" style={inputStyle} />
+                  placeholder="例：090-0000-0000" style={inputStyle} />
               </FormField>
             </div>
           </div>
@@ -281,40 +234,55 @@ export default function CounselingPage() {
         {/* ── Section 2: 体質傾向チェック ── */}
         {section === 2 && (
           <div className="animate-fade-in-up">
-            <SectionHeader title="体質傾向チェック" subtitle="当てはまる項目をすべてお選びください" />
+            <SectionHeader
+              title="体質傾向チェック"
+              subtitle="当てはまる項目をすべてお選びください。チェックの多いグループがお客様の体質傾向です。"
+            />
             <TypeCheckGroup
               title="グループA" color="#C4604A" bg="#FDF0EB" bd="#EDCAB8"
               items={ECTO_ITEMS} checked={form.ectoChecked}
               onToggle={v => toggleCheck("ectoChecked", v)}
-              score={ectoScore}
+              score={baseEcto}
             />
             <TypeCheckGroup
               title="グループB" color="#3A6285" bg="#EBF2F8" bd="#C0D8EC"
               items={MESO_ITEMS} checked={form.mesoChecked}
               onToggle={v => toggleCheck("mesoChecked", v)}
-              score={mesoScore}
+              score={baseMeso}
             />
             <TypeCheckGroup
               title="グループC" color="#9A4870" bg="#FDF0F5" bd="#E8C0D0"
               items={ENDO_ITEMS} checked={form.endoChecked}
               onToggle={v => toggleCheck("endoChecked", v)}
-              score={endoScore}
+              score={baseEndo}
             />
           </div>
         )}
 
         {/* ── Section 3: 身体の症状 ── */}
         {section === 3 && (
-          <div className="animate-fade-in-up">
-            <SectionHeader title="身体の症状" subtitle="現在お感じの症状をすべてお選びください" />
-            <div className="rounded-2xl p-5" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
-              <div className="flex flex-wrap gap-2">
-                {SYMPTOMS.map(s => (
-                  <CheckChip key={s} label={s} checked={form.symptoms.includes(s)}
-                    onChange={() => toggleCheck("symptoms", s)} />
-                ))}
+          <div className="animate-fade-in-up space-y-4">
+            <SectionHeader
+              title="身体の症状"
+              subtitle="現在お感じの症状をすべてお選びください。体質傾向の判定に活用します。"
+            />
+            {SYMPTOM_CATEGORIES.map(cat => (
+              <div key={cat.category} className="rounded-2xl p-5" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
+                <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--herbs-gold)", marginBottom: "10px", letterSpacing: "0.05em" }}>
+                  {cat.category}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {cat.items.map(item => (
+                    <CheckChip
+                      key={item.label}
+                      label={item.label}
+                      checked={form.symptoms.includes(item.label)}
+                      onChange={() => toggleCheck("symptoms", item.label)}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         )}
 
@@ -324,6 +292,7 @@ export default function CounselingPage() {
             <SectionHeader title="髪・生活習慣" subtitle="髪と生活習慣についてお聞かせください" />
 
             {/* 子供の頃の髪質 */}
+            {/* 注: 大人になるにつれてどう変化してきたか、くせ毛の改善度合いの目安になります */}
             <Card title="子供の頃の髪質">
               <div className="flex flex-wrap gap-2">
                 {HAIR_CHILD_TYPES.map(t => (
@@ -353,14 +322,19 @@ export default function CounselingPage() {
             </Card>
 
             {/* カラー・パーマ歴 */}
-            <Card title="カラー・パーマの履歴">
+            {/* 注: 頭皮や髪の改善までの期間の目安になります */}
+            <Card title="カラー・パーマの施術頻度や期間">
               <input type="text" value={form.colorHistory}
                 onChange={e => setForm(f => ({ ...f, colorHistory: e.target.value }))}
-                placeholder="例：3ヶ月前にカラー、1年前にパーマ" style={inputStyle} />
+                placeholder="例：3ヶ月に1回カラー、1年前にパーマ" style={inputStyle} />
             </Card>
 
             {/* 服薬 */}
-            <Card title="現在服用中のお薬はありますか？">
+            {/* 注: 薬によっては髪質が変化することがあります（特にステロイド・ホルモン剤・抗ガン剤等） */}
+            <Card title="長期的に服用しているお薬・サプリメントはありますか？">
+              <p style={{ fontSize: "12px", color: "var(--herbs-muted)", marginBottom: "10px", lineHeight: 1.7 }}>
+                特にステロイド、ピルなどのホルモン剤・抗ガン剤等を使用したことのある場合は現在のみに関わらずご記入ください。
+              </p>
               <div className="flex gap-3 mb-3">
                 {[{ v: false, l: "なし" }, { v: true, l: "あり" }].map(opt => (
                   <button key={String(opt.v)} type="button"
@@ -379,12 +353,44 @@ export default function CounselingPage() {
               {form.hasMedication && (
                 <input type="text" value={form.medicationDetail}
                   onChange={e => setForm(f => ({ ...f, medicationDetail: e.target.value }))}
-                  placeholder="お薬の種類・目的をご記入ください" style={inputStyle} />
+                  placeholder="種類・期間をご記入ください（例：ピル 2年間）" style={inputStyle} />
+              )}
+            </Card>
+
+            {/* 花粉症 */}
+            {/* 注: 植物に対するアレルギー反応の可能性を確認します */}
+            <Card title="花粉症はありますか？">
+              <div className="flex gap-3 mb-3">
+                {[{ v: false, l: "なし" }, { v: true, l: "あり" }].map(opt => (
+                  <button key={String(opt.v)} type="button"
+                    onClick={() => setForm(f => ({ ...f, hasPollen: opt.v }))}
+                    style={{
+                      padding: "8px 20px", borderRadius: "20px",
+                      border: `1.5px solid ${form.hasPollen === opt.v ? "var(--herbs-green)" : "var(--herbs-light)"}`,
+                      background: form.hasPollen === opt.v ? "var(--herbs-green)" : "var(--herbs-white)",
+                      color: form.hasPollen === opt.v ? "white" : "var(--herbs-muted)",
+                      fontSize: "13px", cursor: "pointer",
+                    }}>
+                    {opt.l}
+                  </button>
+                ))}
+              </div>
+              {form.hasPollen && (
+                <div className="flex flex-wrap gap-2">
+                  {POLLEN_TYPES.map(p => (
+                    <CheckChip key={p} label={p} checked={form.pollenTypes.includes(p)}
+                      onChange={() => toggleCheck("pollenTypes", p)} />
+                  ))}
+                </div>
               )}
             </Card>
 
             {/* 生活習慣 */}
+            {/* 注: 水分・油分のバランスが悪くなる要因、根元の立ち上がりに影響、くせが出やすくなります */}
             <Card title="生活習慣（当てはまるものをすべて）">
+              <p style={{ fontSize: "12px", color: "var(--herbs-muted)", marginBottom: "10px", lineHeight: 1.7 }}>
+                生活習慣は頭皮・髪の水分・油分バランスに影響します。
+              </p>
               <div className="flex flex-wrap gap-2">
                 {LIFESTYLE_HABITS.map(h => (
                   <CheckChip key={h} label={h} checked={form.lifestyleHabits.includes(h)}
@@ -394,10 +400,14 @@ export default function CounselingPage() {
             </Card>
 
             {/* 食事メモ */}
-            <Card title="食事・栄養について気になること">
+            {/* 注: その方の髪や体を作る栄養素の源を知るために活用します */}
+            <Card title="普段の食生活について">
+              <p style={{ fontSize: "12px", color: "var(--herbs-muted)", marginBottom: "10px", lineHeight: 1.7 }}>
+                食事は髪・頭皮を作る栄養素の源です。気になることがあればご記入ください。
+              </p>
               <textarea value={form.foodNotes}
                 onChange={e => setForm(f => ({ ...f, foodNotes: e.target.value }))}
-                placeholder="例：野菜不足が気になる、タンパク質が少ない、など"
+                placeholder="例：野菜不足が気になる、タンパク質が少ない、甘いものが多い、など"
                 rows={3} style={{ ...inputStyle, resize: "vertical" }} />
             </Card>
           </div>
@@ -553,7 +563,7 @@ function FormField({ label, required, children }: { label: string; required?: bo
   return (
     <div className="rounded-2xl p-5" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
       <label style={{ display: "block", fontSize: "14px", fontWeight: 600, color: "var(--herbs-green)", marginBottom: "8px" }}>
-        {label} {required &&           <span style={{ color: "var(--herbs-terra)", fontSize: "12px" }}>必須</span>}
+        {label} {required && <span style={{ color: "var(--herbs-terra)", fontSize: "12px" }}>必須</span>}
       </label>
       {children}
     </div>
