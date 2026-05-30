@@ -144,10 +144,10 @@ function CheckChip({ label, checked, onChange, color = "var(--herbs-green)" }: {
         border: `1.5px solid ${checked ? color : "var(--herbs-light)"}`,
         background: checked ? color : "var(--herbs-white)",
         color: checked ? "white" : "var(--herbs-muted)",
-        fontSize: "12px",
+        fontSize: "13px",
         cursor: "pointer",
         transition: "all 0.15s",
-        fontFamily: "'Noto Serif JP', serif",
+        fontFamily: "'Noto Sans JP', sans-serif",
       }}
     >
       {checked ? "✓ " : ""}{label}
@@ -332,7 +332,7 @@ export default function CounselingPage() {
                       border: `1.5px solid ${form.hairChildType === t.value ? "var(--herbs-green)" : "var(--herbs-light)"}`,
                       background: form.hairChildType === t.value ? "var(--herbs-green)" : "var(--herbs-white)",
                       color: form.hairChildType === t.value ? "white" : "var(--herbs-muted)",
-                      fontSize: "12px", cursor: "pointer", transition: "all 0.15s",
+                      fontSize: "13px", cursor: "pointer", transition: "all 0.15s",
                     }}>
                     {t.label}
                   </button>
@@ -442,7 +442,7 @@ export default function CounselingPage() {
                       border: `1.5px solid ${form.visitReason === r ? "var(--herbs-green)" : "var(--herbs-light)"}`,
                       background: form.visitReason === r ? "var(--herbs-green)" : "var(--herbs-white)",
                       color: form.visitReason === r ? "white" : "var(--herbs-muted)",
-                      fontSize: "12px", cursor: "pointer", transition: "all 0.15s",
+                      fontSize: "13px", cursor: "pointer", transition: "all 0.15s",
                     }}>
                     {r}
                   </button>
@@ -460,7 +460,7 @@ export default function CounselingPage() {
 
             {/* 同意 */}
             <div className="rounded-2xl p-5" style={{ background: "var(--herbs-cream)", border: "1px solid var(--herbs-light)" }}>
-              <p style={{ fontSize: "12px", color: "var(--herbs-muted)", lineHeight: 1.8, marginBottom: "12px" }}>
+              <p style={{ fontSize: "13px", color: "var(--herbs-muted)", lineHeight: 1.8, marginBottom: "12px" }}>
                 ご記入いただいた情報は、THE HERBSのカウンセリング・製品提案・サービス改善のみに使用し、第三者への提供は行いません。
               </p>
               <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }}>
@@ -529,10 +529,10 @@ export default function CounselingPage() {
 function SectionHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div className="mb-6">
-      <h2 style={{ fontSize: "20px", fontWeight: 400, color: "var(--herbs-green)", letterSpacing: "0.08em", marginBottom: "4px" }}>
+      <h2 style={{ fontSize: "20px", fontWeight: 600, color: "var(--herbs-green)", letterSpacing: "0.05em", marginBottom: "4px" }}>
         {title}
       </h2>
-      <p style={{ fontSize: "12px", color: "var(--herbs-muted)" }}>{subtitle}</p>
+      <p style={{ fontSize: "13px", color: "var(--herbs-muted)" }}>{subtitle}</p>
       <div style={{ width: 32, height: 1, background: "var(--herbs-gold)", marginTop: "10px" }} />
     </div>
   );
@@ -541,7 +541,7 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle: string })
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-2xl p-5" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
-      <div style={{ fontSize: "13px", fontWeight: 500, color: "var(--herbs-green)", marginBottom: "12px" }}>{title}</div>
+      <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--herbs-green)", marginBottom: "12px" }}>{title}</div>
       {children}
     </div>
   );
@@ -550,8 +550,8 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 function FormField({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="rounded-2xl p-5" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
-      <label style={{ display: "block", fontSize: "13px", fontWeight: 500, color: "var(--herbs-green)", marginBottom: "8px" }}>
-        {label} {required && <span style={{ color: "var(--herbs-terra)", fontSize: "11px" }}>必須</span>}
+      <label style={{ display: "block", fontSize: "14px", fontWeight: 600, color: "var(--herbs-green)", marginBottom: "8px" }}>
+        {label} {required &&           <span style={{ color: "var(--herbs-terra)", fontSize: "12px" }}>必須</span>}
       </label>
       {children}
     </div>
@@ -565,8 +565,8 @@ function TypeCheckGroup({ title, color, bg, bd, items, checked, onToggle, score 
   return (
     <div className="rounded-2xl p-5 mb-4" style={{ background: bg, border: `1.5px solid ${bd}` }}>
       <div className="flex items-center justify-between mb-3">
-        <div style={{ fontSize: "13px", fontWeight: 600, color }}>{title}</div>
-        <div style={{ fontSize: "12px", color, background: "rgba(255,255,255,0.7)", padding: "3px 10px", borderRadius: "12px" }}>
+        <div style={{ fontSize: "14px", fontWeight: 700, color }}>{title}</div>
+        <div style={{ fontSize: "13px", color, background: "rgba(255,255,255,0.7)", padding: "3px 10px", borderRadius: "12px" }}>
           {score} / {items.length}
         </div>
       </div>
@@ -589,5 +589,5 @@ const inputStyle: React.CSSProperties = {
   color: "var(--herbs-green)",
   fontSize: "14px",
   outline: "none",
-  fontFamily: "'Noto Serif JP', serif",
+  fontFamily: "'Noto Sans JP', sans-serif",
 };

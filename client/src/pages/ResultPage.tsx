@@ -98,10 +98,10 @@ export default function ResultPage() {
         {/* 完了メッセージ */}
         <div className="text-center mb-8 animate-fade-in-up">
           <div style={{ fontSize: "32px", marginBottom: "8px" }}>✨</div>
-          <h2 style={{ fontSize: "18px", fontWeight: 400, color: "var(--herbs-green)", marginBottom: "4px" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: 600, color: "var(--herbs-green)", marginBottom: "4px" }}>
             {name ? `${name} 様の` : ""}診断が完了しました
           </h2>
-          <p style={{ fontSize: "12px", color: "var(--herbs-muted)" }}>
+          <p style={{ fontSize: "13px", color: "var(--herbs-muted)" }}>
             カウンセリングシートをご記入いただきありがとうございます
           </p>
         </div>
@@ -117,13 +117,13 @@ export default function ResultPage() {
             />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: `linear-gradient(transparent, ${info.bg}ee)`, padding: "20px 20px 14px" }}>
               <div style={{ fontSize: "11px", color: info.color, letterSpacing: "0.2em", fontFamily: "'Cormorant Garamond', serif" }}>YOUR TYPE</div>
-              <div style={{ fontSize: "28px", fontWeight: 300, color: info.color, letterSpacing: "0.1em", fontFamily: "'Cormorant Garamond', serif" }}>{info.label}</div>
-              <div style={{ fontSize: "12px", color: info.color, opacity: 0.8 }}>{info.tagline}</div>
+              <div style={{ fontSize: "28px", fontWeight: 600, color: info.color, letterSpacing: "0.05em" }}>{info.label}</div>
+              <div style={{ fontSize: "13px", color: info.color, opacity: 0.9 }}>{info.tagline}</div>
             </div>
           </div>
           <div className="p-5">
-            <div style={{ fontSize: "11px", color: info.color, letterSpacing: "0.15em", fontFamily: "'Cormorant Garamond', serif", marginBottom: "6px" }}>{info.subtitle}</div>
-            <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.9 }}>
+            <div style={{ fontSize: "12px", color: info.color, letterSpacing: "0.1em", fontFamily: "'Cormorant Garamond', serif", marginBottom: "6px" }}>{info.subtitle}</div>
+            <p style={{ fontSize: "14px", color: "#333", lineHeight: 1.9 }}>
               {info.description}
             </p>
           </div>
@@ -131,15 +131,15 @@ export default function ResultPage() {
 
         {/* 体質タイプ判定バー */}
         <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
-          <div style={{ fontSize: "13px", fontWeight: 500, color: "var(--herbs-green)", marginBottom: "16px" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "16px" }}>
             体質タイプ判定
           </div>
           <div className="space-y-4">
             {bars.map(bar => (
               <div key={bar.label}>
                 <div className="flex items-center justify-between mb-1">
-                  <span style={{ fontSize: "12px", color: bar.color, fontWeight: 500 }}>{bar.label}</span>
-                  <span style={{ fontSize: "12px", color: bar.color }}>{bar.score}項目</span>
+                  <span style={{ fontSize: "13px", color: bar.color, fontWeight: 600 }}>{bar.label}</span>
+                  <span style={{ fontSize: "13px", color: bar.color }}>{bar.score}項目</span>
                 </div>
                 <div style={{ height: 10, background: "#F0EDE8", borderRadius: 5, overflow: "hidden" }}>
                   <div style={{
@@ -158,14 +158,14 @@ export default function ResultPage() {
 
         {/* ケアアドバイス */}
         <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
-          <div style={{ fontSize: "13px", fontWeight: 500, color: "var(--herbs-green)", marginBottom: "12px" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "12px" }}>
             THE HERBS からのケアアドバイス
           </div>
-          <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.9, marginBottom: "16px" }}>
+          <p style={{ fontSize: "14px", color: "#333", lineHeight: 1.9, marginBottom: "16px" }}>
             {info.care}
           </p>
           <div style={{ borderTop: "1px solid var(--herbs-light)", paddingTop: "14px" }}>
-            <div style={{ fontSize: "11px", fontWeight: 600, color: "var(--herbs-gold)", letterSpacing: "0.1em", marginBottom: "10px" }}>
+            <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--herbs-gold)", letterSpacing: "0.05em", marginBottom: "10px" }}>
               おすすめ製品
             </div>
             <div className="space-y-2">
@@ -216,7 +216,7 @@ export default function ResultPage() {
         {/* フッター */}
         <div className="text-center mt-10">
           <div style={{ width: 32, height: 1, background: "var(--herbs-gold)", margin: "0 auto 12px" }} />
-          <p style={{ fontSize: "11px", color: "var(--herbs-muted)", lineHeight: 1.8 }}>
+          <p style={{ fontSize: "12px", color: "var(--herbs-muted)", lineHeight: 1.8 }}>
             THE HERBS パーソナルカウンセリング<br />
             植物美容メソッドに基づく体質ケアのご提案
           </p>

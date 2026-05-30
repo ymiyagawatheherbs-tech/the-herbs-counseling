@@ -66,7 +66,7 @@ export default function PasscodePage() {
           <h2 style={{ fontSize: "15px", fontWeight: 500, color: "var(--herbs-green)", textAlign: "center", marginBottom: "6px", letterSpacing: "0.05em" }}>
             パスコードを入力してください
           </h2>
-          <p style={{ fontSize: "12px", color: "var(--herbs-muted)", textAlign: "center", marginBottom: "24px" }}>
+          <p style={{ fontSize: "13px", color: "var(--herbs-muted)", textAlign: "center", marginBottom: "24px" }}>
             スタッフよりお伝えしたパスコードをご入力ください
           </p>
 
@@ -90,11 +90,11 @@ export default function PasscodePage() {
                 marginBottom: "8px",
                 width: "100%",
                 textAlign: "center",
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "'Noto Sans JP', sans-serif",
               }}
             />
             {error && (
-              <p style={{ fontSize: "12px", color: "var(--herbs-terra)", textAlign: "center", marginBottom: "12px" }}>
+              <p style={{ fontSize: "13px", color: "var(--herbs-terra)", textAlign: "center", marginBottom: "12px" }}>
                 {error}
               </p>
             )}
@@ -113,7 +113,7 @@ export default function PasscodePage() {
                 cursor: loading || !code.trim() ? "not-allowed" : "pointer",
                 transition: "all 0.2s",
                 marginTop: "8px",
-                fontFamily: "'Noto Serif JP', serif",
+                fontFamily: "'Noto Sans JP', sans-serif",
               }}
             >
               {loading ? "確認中..." : "入力する"}
@@ -121,11 +121,11 @@ export default function PasscodePage() {
           </form>
         </div>
 
-        <p style={{ fontSize: "11px", color: "var(--herbs-muted)", textAlign: "center", marginTop: "20px", lineHeight: 1.8 }}>
+        <p style={{ fontSize: "12px", color: "var(--herbs-muted)", textAlign: "center", marginTop: "20px", lineHeight: 1.8 }}>
           スタッフ・パートナーサロン専用のページです
         </p>
         <div style={{ textAlign: "center", marginTop: "12px" }}>
-          <button onClick={() => navigate("/")} style={{ fontSize: "12px", color: "var(--herbs-green)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>
+          <button onClick={() => navigate("/")} style={{ fontSize: "13px", color: "var(--herbs-green)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>
             アンケートトップへ戻る
           </button>
         </div>

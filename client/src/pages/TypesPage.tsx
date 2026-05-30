@@ -116,11 +116,11 @@ export default function TypesPage() {
       <main className="max-w-2xl mx-auto px-4 py-8">
         {/* タイトル */}
         <div className="text-center mb-8 animate-fade-in-up">
-          <h2 style={{ fontSize: "22px", fontWeight: 300, color: "var(--herbs-green)", letterSpacing: "0.1em", marginBottom: "8px" }}>
+          <h2 style={{ fontSize: "22px", fontWeight: 500, color: "var(--herbs-green)", letterSpacing: "0.1em", marginBottom: "8px" }}>
             あなたの体質タイプを知る
           </h2>
           <div style={{ width: 40, height: 1, background: "var(--herbs-gold)", margin: "0 auto 12px" }} />
-          <p style={{ fontSize: "13px", color: "var(--herbs-muted)", lineHeight: 1.8 }}>
+          <p style={{ fontSize: "14px", color: "var(--herbs-muted)", lineHeight: 1.8 }}>
             植物美容メソッドに基づく3つの体質タイプをご紹介します。<br />
             あなたの体質を知ることが、最適なケアへの第一歩です。
           </p>
@@ -144,7 +144,7 @@ export default function TypesPage() {
                 cursor: "pointer",
                 transition: "all 0.2s",
                 boxShadow: activeIdx === i ? "0 1px 4px rgba(0,0,0,0.08)" : "none",
-                fontFamily: "'Noto Serif JP', serif",
+                fontFamily: "'Noto Sans JP', sans-serif",
                 letterSpacing: "0.02em",
               }}
             >
@@ -199,13 +199,13 @@ export default function TypesPage() {
           {/* カードコンテンツ */}
           <div className="p-5">
             {/* 説明文 */}
-            <p style={{ fontSize: "13px", color: "#444", lineHeight: 1.9, marginBottom: "20px" }}>
+            <p style={{ fontSize: "14px", color: "#333", lineHeight: 1.9, marginBottom: "20px", fontWeight: 400 }}>
               {active.description}
             </p>
 
             {/* 特徴リスト */}
             <div className="mb-5">
-              <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, letterSpacing: "0.1em", marginBottom: "10px", textTransform: "uppercase" }}>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: active.color, letterSpacing: "0.05em", marginBottom: "10px" }}>
                 体質の特徴
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -214,8 +214,8 @@ export default function TypesPage() {
                     background: "rgba(255,255,255,0.7)",
                     borderRadius: "8px",
                     padding: "8px 10px",
-                    fontSize: "12px",
-                    color: "#555",
+                    fontSize: "13px",
+                    color: "#333",
                     display: "flex",
                     alignItems: "center",
                     gap: "6px",
@@ -229,7 +229,7 @@ export default function TypesPage() {
 
             {/* 髪・頭皮の特徴 */}
             <div className="mb-5">
-              <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, letterSpacing: "0.1em", marginBottom: "10px", textTransform: "uppercase" }}>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: active.color, letterSpacing: "0.05em", marginBottom: "10px" }}>
                 髪・頭皮の特徴
               </div>
               <div className="flex flex-wrap gap-2">
@@ -239,7 +239,7 @@ export default function TypesPage() {
                     border: `1px solid ${active.bd}`,
                     borderRadius: "20px",
                     padding: "5px 12px",
-                    fontSize: "12px",
+                    fontSize: "13px",
                     color: active.color,
                   }}>
                     {f}
@@ -255,10 +255,10 @@ export default function TypesPage() {
               padding: "12px 14px",
               borderLeft: `3px solid ${active.color}`,
             }}>
-              <div style={{ fontSize: "11px", fontWeight: 600, color: active.color, marginBottom: "4px" }}>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: active.color, marginBottom: "6px" }}>
                 THE HERBS ケアポイント
               </div>
-              <p style={{ fontSize: "12px", color: "#555", lineHeight: 1.7 }}>
+              <p style={{ fontSize: "14px", color: "#333", lineHeight: 1.8 }}>
                 {active.carePoint}
               </p>
             </div>
@@ -297,7 +297,8 @@ export default function TypesPage() {
               fontSize: "14px",
               letterSpacing: "0.1em",
               cursor: "pointer",
-              fontFamily: "'Noto Serif JP', serif",
+              fontFamily: "'Noto Sans JP', sans-serif",
+              fontWeight: 500,
               boxShadow: "0 4px 16px rgba(45,74,53,0.25)",
               transition: "all 0.2s",
               width: "100%",
