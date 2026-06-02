@@ -163,38 +163,30 @@ export default function TypesPage() {
             boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
           }}
         >
+          {/* タイプヘッダー */}
+          <div style={{ padding: "20px 20px 0", background: active.bg }}>
+            <div style={{ fontSize: "11px", color: active.color, letterSpacing: "0.15em", fontFamily: "'Cormorant Garamond', serif", marginBottom: "2px" }}>
+              {active.subtitle}
+            </div>
+            <h3 style={{ fontSize: "26px", fontWeight: 400, color: active.color, letterSpacing: "0.08em", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.2 }}>
+              {active.label}
+            </h3>
+            <div style={{ fontSize: "12px", color: active.color, opacity: 0.8, marginTop: "2px", marginBottom: "12px" }}>
+              {active.tagline}
+            </div>
+          </div>
           {/* イラスト */}
-          <div style={{ position: "relative", background: "#FAFAF8", display: "flex", justifyContent: "center", alignItems: "center", padding: "0" }}>
+          <div style={{ background: "#FAFAF8", display: "flex", justifyContent: "center", alignItems: "flex-end" }}>
             <img
               src={ILLUST_URLS[active.id]}
               alt={`${active.label}のイラスト`}
               style={{
-                width: "70%",
-                maxWidth: "320px",
+                width: "65%",
+                maxWidth: "280px",
                 height: "auto",
                 display: "block",
-                margin: "0 auto",
               }}
             />
-            {/* タイプラベルオーバーレイ */}
-            <div style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              background: `linear-gradient(transparent, #FAFAF8ee)`,
-              padding: "24px 20px 16px",
-            }}>
-              <div style={{ fontSize: "11px", color: active.color, letterSpacing: "0.15em", fontFamily: "'Cormorant Garamond', serif", marginBottom: "2px" }}>
-                {active.subtitle}
-              </div>
-              <h3 style={{ fontSize: "26px", fontWeight: 400, color: active.color, letterSpacing: "0.08em", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.2 }}>
-                {active.label}
-              </h3>
-              <div style={{ fontSize: "12px", color: active.color, opacity: 0.8, marginTop: "2px" }}>
-                {active.tagline}
-              </div>
-            </div>
           </div>
 
           {/* カードコンテンツ */}
