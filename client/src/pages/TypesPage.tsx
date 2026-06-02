@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 
 const ILLUST_URLS: Record<string, string> = {
-  ecto: "/manus-storage/herbs-ecto_e909f0ad.png",
-  meso: "/manus-storage/herbs-meso_94923867.png",
-  endo: "/manus-storage/herbs-endo_6ed69735.png",
+  ecto: "/manus-storage/type_ecto_54491da2.png",
+  meso: "/manus-storage/type_meso_43e96528.png",
+  endo: "/manus-storage/type_endo_06502e5b.png",
 };
 
 const TYPES = [
@@ -164,15 +164,16 @@ export default function TypesPage() {
           }}
         >
           {/* イラスト */}
-          <div style={{ position: "relative", background: "rgba(255,255,255,0.5)" }}>
+          <div style={{ position: "relative", background: "#FAFAF8", display: "flex", justifyContent: "center", alignItems: "flex-end", minHeight: "360px", overflow: "hidden" }}>
             <img
               src={ILLUST_URLS[active.id]}
               alt={`${active.label}のイラスト`}
               style={{
-                width: "100%",
-                maxHeight: "320px",
-                objectFit: "cover",
-                objectPosition: "center top",
+                height: "400px",
+                width: "auto",
+                maxWidth: "100%",
+                objectFit: "contain",
+                objectPosition: "center bottom",
                 display: "block",
               }}
             />
@@ -182,7 +183,7 @@ export default function TypesPage() {
               bottom: 0,
               left: 0,
               right: 0,
-              background: `linear-gradient(transparent, ${active.bg}dd)`,
+              background: `linear-gradient(transparent, #FAFAF8ee)`,
               padding: "24px 20px 16px",
             }}>
               <div style={{ fontSize: "11px", color: active.color, letterSpacing: "0.15em", fontFamily: "'Cormorant Garamond', serif", marginBottom: "2px" }}>
