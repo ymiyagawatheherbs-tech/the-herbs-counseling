@@ -164,16 +164,15 @@ export default function TypesPage() {
           }}
         >
           {/* イラスト */}
-          <div style={{ position: "relative", background: "#FAFAF8", display: "flex", justifyContent: "center", alignItems: "flex-end", minHeight: "360px", overflow: "hidden" }}>
+          <div style={{ position: "relative", background: "#FAFAF8", display: "flex", justifyContent: "center", alignItems: "center", height: "420px", overflow: "hidden" }}>
             <img
               src={ILLUST_URLS[active.id]}
               alt={`${active.label}のイラスト`}
               style={{
-                height: "400px",
+                height: "100%",
                 width: "auto",
                 maxWidth: "100%",
                 objectFit: "contain",
-                objectPosition: "center bottom",
                 display: "block",
               }}
             />
