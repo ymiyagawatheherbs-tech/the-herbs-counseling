@@ -33,7 +33,8 @@ export default function PartnerPage() {
   });
 
   const filtered: CounselingSession[] = sessions?.filter((s: CounselingSession) =>
-    s.clientName.includes(search) ||
+    (s.managementNo ?? "").includes(search) ||
+    (s.ageGroup ?? "").includes(search) ||
     TYPE_LABELS[s.primaryType as keyof typeof TYPE_LABELS]?.includes(search)
   ) ?? [];
 
@@ -118,7 +119,7 @@ export default function PartnerPage() {
                       background: selectedId === s.id ? "var(--herbs-cream)" : i % 2 === 0 ? "var(--herbs-white)" : "#FDFAF8",
                       cursor: "pointer",
                     }}>
-                    <td style={{ padding: "10px 12px", fontSize: "13px", color: "var(--herbs-green)", fontWeight: 500 }}>{s.clientName}</td>
+                    <td style={{ padding: "10px 12px", fontSize: "13px", color: "var(--herbs-green)", fontWeight: 500 }}>{s.managementNo || `#${s.id}`}</td>
                     <td style={{ padding: "10px 12px" }}>
                       <span style={{ fontSize: "12px", color: TYPE_COLORS[s.primaryType as keyof typeof TYPE_COLORS] || "#888", fontWeight: 500 }}>
                         {TYPE_LABELS[s.primaryType as keyof typeof TYPE_LABELS] || "不明"}
@@ -144,20 +145,14 @@ export default function PartnerPage() {
         {selected && (
           <div className="mt-4 rounded-2xl p-5" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
             <div className="flex items-center justify-between mb-4">
-              <h3 style={{ fontSize: "15px", fontWeight: 500, color: "var(--herbs-green)" }}>{selected.clientName} 様の詳細</h3>
+              <h3 style={{ fontSize: "15px", fontWeight: 500, color: "var(--herbs-green)" }}>{selected.managementNo || `#${selected.id}`} の詳細</h3>
               <button onClick={() => setSelectedId(null)} style={{ background: "none", border: "none", color: "var(--herbs-muted)", cursor: "pointer", fontSize: "18px" }}>×</button>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {selected.clientKana && <Detail label="ふりがな" value={selected.clientKana} />}
-              {selected.clientDob && <Detail label="生年月日" value={selected.clientDob} />}
-              {selected.clientJob && <Detail label="ご職業" value={selected.clientJob} />}
+              {selected.managementNo && <Detail label="管理番号" value={selected.managementNo} />}
+              {selected.ageGroup && <Detail label="年代" value={selected.ageGroup} />}
               {selected.visitReason && <Detail label="来店動機" value={selected.visitReason} />}
             </div>
-            {selected.request && (
-              <div className="mt-3 p-3 rounded-lg" style={{ background: "var(--herbs-cream)", fontSize: "12px", color: "var(--herbs-muted)" }}>
-                <strong>ご要望：</strong>{selected.request}
-              </div>
-            )}
             {Array.isArray(selected.hairTroubles) && (selected.hairTroubles as string[]).length > 0 && (
               <div className="mt-3">
                 <div style={{ fontSize: "11px", color: "var(--herbs-muted)", marginBottom: "6px" }}>髪・頭皮のトラブル</div>
