@@ -62,9 +62,9 @@ const TYPES = [
     id: "endo",
     label: "内胚葉型",
     subtitle: "Endomorph Type",
-    color: "#9A4870",
-    bg: "#FDF0F5",
-    bd: "#E8C0D0",
+    color: "#3A7A50",
+    bg: "#EDF5EF",
+    bd: "#BFDCC7",
     tagline: "豊か・潤い・温かみ",
     description: "内胚葉型は、消化器系・内分泌系が発達した体質です。髪が細く、茶系の髪色。頭皮や肌の赤みが出やすい。",
     traits: [
