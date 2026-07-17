@@ -63,14 +63,12 @@ export type InsertPasscode = typeof passcodes.$inferInsert;
  */
 export const counselingSessions = mysqlTable("counseling_sessions", {
   id: int("id").autoincrement().primaryKey(),
-  // お客様情報
-  clientName: varchar("clientName", { length: 255 }).notNull(),
-  clientKana: varchar("clientKana", { length: 255 }),
-  clientDob: varchar("clientDob", { length: 20 }),
-  clientJob: varchar("clientJob", { length: 255 }),
-  clientAddress: varchar("clientAddress", { length: 500 }),
-  clientTel: varchar("clientTel", { length: 50 }),
-  clientMobile: varchar("clientMobile", { length: 50 }),
+  // ── 個人を特定する情報は保存しません ──────────────────────────────
+  // 氏名・生年月日・住所・電話・自由記述・服薬内容は、端末内での表示と
+  // 印刷（サロンのカルテ）にのみ使用し、サーバーへは送信しません。
+  // 統計に必要な範囲のみを保存します。
+  managementNo: varchar("managementNo", { length: 64 }),   // サロン側の管理番号（任意・サロンのみが対応を把握）
+  ageGroup: varchar("ageGroup", { length: 16 }),           // 年代（10代〜70代以上）
   // 体質チェック結果
   ectoScore: int("ectoScore").default(0).notNull(),
   mesoScore: int("mesoScore").default(0).notNull(),
@@ -80,22 +78,16 @@ export const counselingSessions = mysqlTable("counseling_sessions", {
   ectoChecked: json("ectoChecked"),       // 外胚葉型チェック項目
   mesoChecked: json("mesoChecked"),       // 中胚葉型チェック項目
   endoChecked: json("endoChecked"),       // 内胚葉型チェック項目
-  symptoms: json("symptoms"),             // 身体の症状
+  symptoms: json("symptoms"),             // 気になる傾向
   hairChildType: varchar("hairChildType", { length: 50 }),  // 子供の頃の髪質
   hairTroubles: json("hairTroubles"),     // 髪・頭皮のトラブル
   colorHistory: varchar("colorHistory", { length: 500 }),   // カラー・パーマ歴
-  hasMedication: boolean("hasMedication").default(false),
-  medicationDetail: text("medicationDetail"),
   hasPollen: boolean("hasPollen").default(false),
   pollenTypes: json("pollenTypes"),
   lifestyleHabits: json("lifestyleHabits"),
-  foodNotes: text("foodNotes"),
-  hasIllness: boolean("hasIllness").default(false),
-  illnessDetail: text("illnessDetail"),
   visitReason: varchar("visitReason", { length: 100 }),
-  request: text("request"),
   // アクセス経路
-  accessChannel: mysqlEnum("accessChannel", ["store", "sns", "line", "web", "other"]).default("other").notNull(),
+  accessChannel: mysqlEnum("accessChannel", ["store", "sns", "line", "web", "public", "other"]).default("other").notNull(),
   // パートナーサロン情報
   partnerSalonId: int("partnerSalonId"),
   // メタデータ
