@@ -5,10 +5,19 @@
  * 症状・チェック項目・胚葉スコアの対応を管理します。
  *
  * ─────────────────────────────────────────────────────────────────
- * 胚葉タイプ凡例:
- *   ecto = 外胚葉型（赤）: 神経系・皮膚・感覚器官が発達、乾燥・敏感肌傾向
- *   meso = 中胚葉型（青）: 筋骨格系が発達、活動的・ベタつき傾向
- *   endo = 内胚葉型（緑）: 消化器系・内分泌系が発達、むくみ・皮脂多め傾向
+ * 胚葉タイプ凡例（体質学 基礎Ⅰ〜Ⅲ 準拠）:
+ *   ecto = 外胚葉型 #C4604A: 神経・感覚・皮膚が発達。乾燥・くすみ・冷え・巡りひかえめ。
+ *                            髪は太く黒く、うねり／縮毛。撥水毛。
+ *   meso = 中胚葉型 #3A6285: 筋・骨・循環が発達。皮脂分泌が多め、毛穴・テカリ傾向。
+ *                            頭皮が固くなりやすい。健康毛で薬剤がのりにくい。
+ *   endo = 内胚葉型 #3A7A50: 消化器・内分泌が発達。色白でメラニンが少なく、
+ *                            炎症・赤みが出やすい。乾燥しやすく摩擦に弱い。髪は細くボリューム出にくい。
+ *
+ * ※ 皮脂が多いのは「中胚葉型」、乾燥・敏感は「内胚葉型／外胚葉型」。
+ *   摩擦・スクラブは内胚葉型に不向き（赤み・肝斑の悪化要因）。
+ *
+ * ※ 本アプリはパーソナルカウンセリング（美容・養生の提案）のためのものであり、
+ *   医療の診断・治療を目的としません。設問は病名ではなく「出やすい傾向」で記述します。
  * ─────────────────────────────────────────────────────────────────
  */
 
@@ -67,81 +76,89 @@ export interface SymptomCategory {
 
 export const SYMPTOM_CATEGORIES: SymptomCategory[] = [
   {
-    category: "筋肉系",
+    category: "めぐり・冷え",
     items: [
-      { label: "肩こり",   ectoBonus: 1, mesoBonus: 1, endoBonus: 0 },
-      { label: "首の痛み", ectoBonus: 1, mesoBonus: 1, endoBonus: 0 },
-      { label: "腰痛",     ectoBonus: 0, mesoBonus: 2, endoBonus: 1 },
-      { label: "しびれ",   ectoBonus: 1, mesoBonus: 0, endoBonus: 1 },
+      { label: "手足が冷えやすい",             ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
+      { label: "血圧は低めで朝が苦手",         ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
+      { label: "立ちくらみ・めまいがある",     ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
+      { label: "血圧は高め",                   ectoBonus: 0, mesoBonus: 2, endoBonus: 1 },
+      { label: "脚が重い・だるい",             ectoBonus: 1, mesoBonus: 1, endoBonus: 2 },
+      { label: "甘いものを好む・喉が渇きやすい", ectoBonus: 0, mesoBonus: 1, endoBonus: 2 },
+      { label: "体重・代謝が気になる",         ectoBonus: 0, mesoBonus: 1, endoBonus: 2 },
     ],
   },
   {
-    category: "呼吸器系",
+    category: "呼吸・鼻",
     items: [
-      { label: "気管支炎",   ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "鼻炎",       ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "せき",       ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
-      { label: "ぜんそく",   ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "花粉症",     ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "呼吸が浅い", ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
-      { label: "風邪をひきやすい", ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
+      { label: "呼吸が浅いと感じる",       ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
+      { label: "鼻がむずむずしやすい",     ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
+      { label: "喉から不調が始まりやすい", ectoBonus: 0, mesoBonus: 0, endoBonus: 2 },
+      { label: "季節の変わり目に弱い",     ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
     ],
   },
   {
-    category: "循環器系",
+    category: "消化・おなか",
     items: [
-      { label: "貧血",       ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "低血圧",     ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
-      { label: "静脈瘤",     ectoBonus: 0, mesoBonus: 1, endoBonus: 2 },
-      { label: "心臓病",     ectoBonus: 1, mesoBonus: 1, endoBonus: 1 },
-      { label: "高血圧",     ectoBonus: 0, mesoBonus: 2, endoBonus: 1 },
-      { label: "糖尿病",     ectoBonus: 0, mesoBonus: 1, endoBonus: 2 },
-      { label: "中性脂肪",   ectoBonus: 0, mesoBonus: 1, endoBonus: 2 },
+      { label: "胃に負担を感じやすい",         ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
+      { label: "胃のむかつき・胃酸が気になる", ectoBonus: 1, mesoBonus: 2, endoBonus: 0 },
+      { label: "便秘ぎみ",                     ectoBonus: 2, mesoBonus: 1, endoBonus: 1 },
+      { label: "お腹がゆるくなりやすい",       ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
+      { label: "お腹が張りやすい",             ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
+      { label: "お酒・脂ものが負担に感じる",   ectoBonus: 0, mesoBonus: 2, endoBonus: 1 },
+      { label: "空腹でイライラしやすい",       ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
     ],
   },
   {
-    category: "消化器系",
+    category: "水分・むくみ",
     items: [
-      { label: "胃痛",       ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
-      { label: "胃酸過多",   ectoBonus: 1, mesoBonus: 2, endoBonus: 0 },
-      { label: "潰瘍",       ectoBonus: 1, mesoBonus: 2, endoBonus: 0 },
-      { label: "肝臓不調",   ectoBonus: 0, mesoBonus: 1, endoBonus: 2 },
-      { label: "便秘",       ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "下痢",       ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
-      { label: "お腹の張り", ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
+      { label: "顔・体がむくみやすい",   ectoBonus: 1, mesoBonus: 1, endoBonus: 2 },
+      { label: "水分がたまりやすい",     ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
+      { label: "汗をあまりかかない",     ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
+      { label: "汗をかきやすい",         ectoBonus: 0, mesoBonus: 2, endoBonus: 0 },
     ],
   },
   {
-    category: "泌尿器系",
+    category: "肩・首・関節",
     items: [
-      { label: "膀胱炎",   ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "腎結石",   ectoBonus: 1, mesoBonus: 1, endoBonus: 1 },
-      { label: "腎臓病",   ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
-      { label: "むくみ",   ectoBonus: 0, mesoBonus: 0, endoBonus: 2 },
+      { label: "肩がこりやすい",         ectoBonus: 1, mesoBonus: 2, endoBonus: 0 },
+      { label: "首がつらい",             ectoBonus: 1, mesoBonus: 2, endoBonus: 0 },
+      { label: "腰が重い",               ectoBonus: 0, mesoBonus: 2, endoBonus: 1 },
+      { label: "関節がこわばりやすい",   ectoBonus: 1, mesoBonus: 2, endoBonus: 1 },
+      { label: "体が固いと感じる",       ectoBonus: 0, mesoBonus: 2, endoBonus: 1 },
     ],
   },
   {
-    category: "婦人科系",
+    category: "睡眠・気分",
     items: [
-      { label: "生理痛",       ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "生理不順",     ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
-      { label: "子宮内膜症",   ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
-      { label: "子宮筋腫",     ectoBonus: 0, mesoBonus: 0, endoBonus: 2 },
-      { label: "妊娠の可能性", ectoBonus: 0, mesoBonus: 0, endoBonus: 0 },
+      { label: "寝つきにくい・眠りが浅い",   ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
+      { label: "緊張からの頭痛が出やすい",   ectoBonus: 1, mesoBonus: 2, endoBonus: 0 },
+      { label: "耳鳴りがすることがある",     ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
+      { label: "頑張りすぎてしまう",         ectoBonus: 0, mesoBonus: 2, endoBonus: 0 },
+      { label: "気分の波を感じやすい",       ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
+      { label: "ストレスを抱え込みやすい",   ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
     ],
   },
   {
-    category: "その他",
+    category: "お肌の傾向",
     items: [
-      { label: "アレルギー",   ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "アトピー",     ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
-      { label: "頭痛",         ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
-      { label: "冷え性",       ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
-      { label: "関節炎",       ectoBonus: 1, mesoBonus: 2, endoBonus: 1 },
-      { label: "リウマチ",     ectoBonus: 1, mesoBonus: 1, endoBonus: 1 },
-      { label: "耳鳴り",       ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
-      { label: "不眠",         ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
-      { label: "坐骨神経痛",   ectoBonus: 1, mesoBonus: 1, endoBonus: 1 },
+      { label: "乾燥・くすみが気になる",     ectoBonus: 2, mesoBonus: 0, endoBonus: 1 },
+      { label: "皮脂・毛穴・テカリが気になる", ectoBonus: 0, mesoBonus: 2, endoBonus: 0 },
+      { label: "赤み・敏感さが気になる",     ectoBonus: 0, mesoBonus: 0, endoBonus: 2 },
+      { label: "日焼けすると黒くなる",       ectoBonus: 2, mesoBonus: 0, endoBonus: 0 },
+      { label: "日焼けすると赤くなる",       ectoBonus: 0, mesoBonus: 0, endoBonus: 2 },
+      { label: "シミ・肝斑が気になる",       ectoBonus: 1, mesoBonus: 1, endoBonus: 1 },
+      { label: "深いシワが気になる",         ectoBonus: 0, mesoBonus: 2, endoBonus: 0 },
+      { label: "たるみ・だぶつきが気になる", ectoBonus: 1, mesoBonus: 0, endoBonus: 2 },
+    ],
+  },
+  {
+    category: "女性のリズム",
+    items: [
+      { label: "生理痛がつらい",           ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
+      { label: "周期が乱れやすい",         ectoBonus: 2, mesoBonus: 1, endoBonus: 0 },
+      { label: "生理前に不調が出やすい",   ectoBonus: 1, mesoBonus: 1, endoBonus: 1 },
+      { label: "更年期の変化を感じる",     ectoBonus: 1, mesoBonus: 1, endoBonus: 1 },
+      { label: "妊娠の可能性がある",       ectoBonus: 0, mesoBonus: 0, endoBonus: 0 },
     ],
   },
 ];
