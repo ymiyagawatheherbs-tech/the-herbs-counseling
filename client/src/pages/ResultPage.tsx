@@ -18,6 +18,12 @@ const TYPE_INFO = {
     tagline: "繊細・感じやすい・巡りひかえめ",
     principle: "補う",
     description: "神経・感覚・皮膚が発達したタイプです。感覚が繊細に働きやすい一方、巡りや消化の力はひかえめになりやすく、乾燥・くすみ・冷えが出やすい傾向があります。髪は太くしっかりしていて、うねりが出やすく、湿気で広がりやすいのも特徴です。",
+    constitution: "神経と感覚が繊細に働きやすく、その分、巡りと消化の力はひかえめになりやすいタイプです。冷えを感じやすく、血圧は低め、朝が苦手という方が多くみられます。汗や皮脂の分泌は多くないため肌は汚れにくい一方、水分がとどまってむくみやたるみとして表れることがあります。空腹が続くと力が入りにくくなるのも特徴です。",
+    temperament: "Sharp & Sensitive ― 感性で受けとめるスタイル。まわりの空気や刺激を細やかに感じ取る一方、その感覚を言葉にするのは得意でないことがあります。ストレスは内側に抱え込みやすく、寝つきにくさや食欲の落ちとして表れやすい傾向です。",
+    skin: "乾燥とくすみが出やすく、透明感が落ちやすい肌質。皮脂が少ないぶん、かえって毛穴に汚れがたまりやすいことがあります。日焼けすると黒くなりやすく、シミが定着しやすいのも特徴です。",
+    hair: "髪は太くしっかりしていて量も多く感じられ、うねりや縮毛が出やすいタイプ。湿気を含むと広がります。撥水毛で薬剤が入りにくいため、施術前の下準備が仕上がりを左右します。若白髪が増えやすい傾向もあります。",
+    foods: ["温かいスープ・煮込み", "消化の良い根菜（山芋・じゃがいも）", "しょうが・ねぎ・ニンニク", "赤身肉・レバー・うなぎ（鉄）", "海藻・魚介", "緑黄色野菜・豆類", "りんご・バナナ", "はちみつ・梅干"],
+    cautions: ["玄米や生野菜のとりすぎ（消化の負担に）", "空腹の時間を長くつくらない（少量を回数多く）", "冷たい飲み物・冷房での冷え", "強いピーリング・スクラブ", "アルコール高配合の化粧品"],
     care: "キーワードは「補う」。水分と油分をやさしく補い、温めて巡りを助けるケアが土台になります。洗浄力の強いものや刺激の強いケアは、乾燥を進めてしまうため控えめに。撥水毛で薬剤が入りにくいため、施術前の下準備が仕上がりを左右します。",
   },
   meso: {
@@ -30,6 +36,12 @@ const TYPE_INFO = {
     tagline: "強さ・頑張れる・巡りが鍵",
     principle: "めぐらせる",
     description: "筋・骨・循環が発達したタイプです。もともと丈夫で頑張りがきく一方、巡りが滞ると不調が出やすくなります。皮脂の分泌が多めで、テカリや毛穴の汚れが気になりやすく、頭皮が固くなりやすいのも特徴です。",
+    constitution: "動くためにつくられた、しっかりした体をお持ちのタイプです。多少の無理がきくぶん、頑張りすぎが積み重なりやすい面があります。体を動かさない時期が続くと、血液やリンパの流れが滞り、肩や首のこわばり・頭痛として表れやすくなります。年齢とともに骨の密度や関節の柔らかさに変化を感じやすい傾向もあります。",
+    temperament: "Strong & Logical ― 筋道と納得を大切にするスタイル。あいまいさを好まず、コツコツ積み上げる頑張り屋です。完璧主義で我慢強いぶん、ストレスをためこみやすく、それが体の緊張として表れやすい傾向があります。",
+    skin: "皮脂の分泌が多めで、テカリや毛穴の汚れが気になりやすい肌質。炎症は起こしにくく日焼けもしにくい一方、深いシワや肌の硬さが出やすい傾向があります。洗いすぎるとかえって皮脂が増えるため、加減が大切です。",
+    hair: "幼少期から直毛で、太さは普通の健康毛。健康毛ゆえに薬剤がのりにくく、放置時間が長くなりがちでダメージが蓄積しやすい点に注意が必要です。頭皮は皮脂が多めで固くなりやすく、ストレスが続くと抜け毛や切れ毛が増えることがあります。",
+    foods: ["豆腐・魚（良質なタンパク質）", "緑黄色野菜", "発酵食品", "海藻・ごぼう（食物繊維）", "トマト・玉ねぎ・アスパラ", "ナッツ", "酢の物", "カルシウム・コラーゲン＋ビタミンC・D"],
+    cautions: ["アルコール・甘いもの・塩分のとりすぎ", "頑張りすぎ ― 意識して休息を", "運動不足（巡りが滞ります）", "動物性脂肪の過多（皮脂・毛穴に）", "薬剤の放置時間が長くなること"],
     care: "キーワードは「めぐらせる」。皮脂は取りすぎるとかえって増えるため、バランスを整えることが大切です。頭皮が固い方は、施術前後のヘッドマッサージで血行を促すと効果が高まります。健康毛で薬剤がのりにくいため、放置時間の管理が重要です。",
   },
   endo: {
@@ -42,6 +54,12 @@ const TYPE_INFO = {
     tagline: "やわらか・社交的・ゆらぎやすい",
     principle: "整える",
     description: "消化器・内分泌が発達したタイプです。吸収がよくエネルギー効率が高い一方、色白でメラニンが少なく、赤みや炎症が出やすい繊細な肌質。乾燥しやすく摩擦に弱い傾向があります。髪は細く、ボリュームが出にくく、ダメージを受けやすいのも特徴です。",
+    constitution: "消化器が発達して吸収がよく、少量でもエネルギーを取り込める効率のよいタイプです。そのぶん、とりすぎが続くと体重や代謝の管理がしにくくなりやすい面があります。水分がとどまってむくみやだぶつきとして表れやすく、気分の波を感じやすいのも特徴です。",
+    temperament: "Soft & Social ― 人とのつながりと安心を大切にする、やわらかなスタイル。温和で場を明るくする社交的な面と、慎重で心配性な面をあわせ持ちます。ストレスは食欲や感情で発散しようとする傾向があり、気分の波が体調と連動しやすいタイプです。",
+    skin: "色白でメラニンが少なく、日焼けすると赤くなりやすい繊細な肌質。頬の赤みや毛細血管の広がり、口まわりの吹き出物が出やすい傾向があります。乾燥しやすく、摩擦にとても弱いのが最大の特徴です。",
+    hair: "1本1本が細く、ボリュームが出にくいやわらかな髪質。キューティクルが繊細でダメージを受けやすく、カラーの色落ちが早い傾向があります。頭皮は乾燥しやすくむくみやすい状態。薬剤で赤みやかゆみが出ることがあるため、パッチテストが欠かせません。",
+    foods: ["野菜中心・繊維から先に", "海藻・こんにゃく", "低GIの食品", "玉ねぎ・青じそ・キャベツ", "豆腐・魚介・豚赤身", "オレンジ・りんご", "ナッツ・ごぼう", "ビタミンB・たんぱく質"],
+    cautions: ["糖質・炭水化物のとりすぎ", "早食い・過食（ゆっくり食べる）", "夕食のカロリーオーバー", "動物性脂肪・果物は控えめに", "摩擦・スクラブ（赤みやシミの悪化要因）", "日焼け ― 炎症を起こしやすいため紫外線対策を"],
     care: "キーワードは「整える」。低刺激の保湿でバリアを守りながら、むくみをためこまないよう巡りを助けます。摩擦は赤みやシミの悪化要因になるため、スクラブや強いこすり洗いは避け、しっかり泡立てて手でやさしく洗ってください。薬剤に反応が出やすいため、パッチテストを必ず行いましょう。",
   },
   unknown: {
@@ -52,8 +70,15 @@ const TYPE_INFO = {
     bd: "#C8DCC8",
     icon: "🌿",
     tagline: "バランス・調和",
-    description: "あなたはバランスの取れた体質です。複数の体質タイプの特徴を持っています。",
-    care: "総合的なケアをお勧めします。頭皮の定期チェックで状態を把握しながら、季節に合わせたケアを行いましょう。",
+    principle: "ととのえる",
+    description: "複数の体質タイプの特徴をあわせ持つ、バランスのとれた傾向です。3つの胚葉のうち、どれか一つに大きく偏らないタイプといえます。",
+    care: "特定の偏りが強くないぶん、その時々の状態に合わせて整えることが大切です。季節や生活の変化で傾きが変わりやすいため、定期的に状態を見ていきましょう。",
+    constitution: "3つの傾向がバランスよく現れています。強い偏りがない一方、季節や生活の変化によって、どちらかに傾くことがあります。",
+    temperament: "状況に応じて、感性・理性・社交性を使い分けられる柔軟さをお持ちです。",
+    skin: "その時々の状態によって、乾燥にも皮脂にも傾くことがあります。今のお肌の状態に合わせたケアを。",
+    hair: "髪質も中間的な傾向です。季節や体調による変化を見ながら整えていきましょう。",
+    foods: ["季節の野菜を中心に", "よく噛んでゆっくり", "腹八分目", "発酵食品", "海藻・豆類", "良質なタンパク質"],
+    cautions: ["偏った食生活", "生活リズムの乱れ", "季節の変わり目の変化に注意"],
   },
 };
 
@@ -130,7 +155,6 @@ export default function ResultPage() {
   const hasPollen = params.get("hasPollen") === "true";
   const pollenTypes = params.get("pollenTypes") ? params.get("pollenTypes")!.split(",").filter(Boolean) : [];
   const colorHistory = params.get("colorHistory") || "";
-  const visitReason = params.get("visitReason") || "";
   const hairChildType = params.get("hairChildType") || "";
   const foodNotes = params.get("foodNotes") || "";
 
@@ -174,7 +198,7 @@ export default function ResultPage() {
               THE HERBS
             </h1>
           </div>
-          <div style={{ fontSize: "11px", color: "var(--herbs-muted)" }}>診断結果</div>
+          <div style={{ fontSize: "11px", color: "var(--herbs-muted)" }}>体質傾向</div>
         </div>
       </header>
 
@@ -183,7 +207,7 @@ export default function ResultPage() {
         <div className="text-center mb-8 animate-fade-in-up">
           <div style={{ fontSize: "32px", marginBottom: "8px" }}>✨</div>
           <h2 style={{ fontSize: "18px", fontWeight: 600, color: "var(--herbs-green)", marginBottom: "4px" }}>
-            {name ? `${name} 様の` : ""}診断が完了しました
+            {name ? `${name} 様の` : ""}体質傾向をお読みしました
           </h2>
           <p style={{ fontSize: "13px", color: "var(--herbs-muted)" }}>
             カウンセリングシートをご記入いただきありがとうございます
@@ -213,10 +237,10 @@ export default function ResultPage() {
           </div>
         </div>
 
-        {/* 体質タイプ判定バー */}
+        {/* 体質バランスバー */}
         <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
           <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "16px" }}>
-            体質タイプ判定
+            体質バランス
           </div>
           <div className="space-y-4">
             {bars.map(bar => (
@@ -239,18 +263,77 @@ export default function ResultPage() {
             ))}
           </div>
           <p style={{ fontSize: "11px", color: "var(--herbs-muted)", marginTop: "12px", lineHeight: 1.7 }}>
-            ※ スコアは体質傾向チェック＋身体の症状の関連度から算出しています
+            ※ 体質傾向チェックと、気になる傾向の関連度から算出しています
           </p>
         </div>
 
-        {/* ケアアドバイス */}
-        <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
-          <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "12px" }}>
-            体質から見た、ケアの考え方
+        {/* 体質・気質・肌質・髪質 */}
+        <div className="rounded-2xl p-6 mb-4" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "6px" }}>
+            {info.label}の傾向
           </div>
-          <p style={{ fontSize: "14px", color: "#333", lineHeight: 1.9, marginBottom: "16px" }}>
+          <div style={{ fontSize: "12px", color: "var(--herbs-muted)", marginBottom: "18px" }}>
+            体質・気質・肌質・髪質の4つの側面から
+          </div>
+
+          {([
+            { key: "体質", body: info.constitution, mark: "からだ" },
+            { key: "気質", body: info.temperament,  mark: "こころ" },
+            { key: "肌質", body: info.skin,         mark: "はだ" },
+            { key: "髪質", body: info.hair,         mark: "かみ" },
+          ] as const).map(sec => (
+            <div key={sec.key} style={{ marginBottom: "18px", paddingLeft: "14px", borderLeft: `3px solid ${info.color}` }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "6px" }}>
+                <span style={{ fontSize: "15px", fontWeight: 700, color: info.color }}>{sec.key}</span>
+                <span style={{ fontSize: "10px", color: "var(--herbs-muted)", letterSpacing: "0.08em" }}>{sec.mark}</span>
+              </div>
+              <p style={{ fontSize: "13px", color: "#333", lineHeight: 1.9 }}>{sec.body}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* ケアの考え方 */}
+        <div className="rounded-2xl p-6 mb-4" style={{ background: info.bg, border: `1px solid ${info.bd}` }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
+            <span style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)" }}>体質から見た、ケアの考え方</span>
+            <span style={{ fontSize: "11px", fontWeight: 700, color: "#fff", background: info.color, borderRadius: "99px", padding: "2px 10px" }}>
+              {info.principle}
+            </span>
+          </div>
+          <p style={{ fontSize: "14px", color: "#333", lineHeight: 1.9 }}>
             {info.care}
           </p>
+        </div>
+
+        {/* おすすめの食材・気をつけたいこと */}
+        <div className="rounded-2xl p-6 mb-4" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "14px" }}>
+            食から整える
+          </div>
+
+          <div style={{ fontSize: "12px", fontWeight: 700, color: info.color, marginBottom: "8px", letterSpacing: "0.05em" }}>
+            おすすめの食材・食べ方
+          </div>
+          <div className="flex flex-wrap gap-2" style={{ marginBottom: "18px" }}>
+            {info.foods.map((f, i) => (
+              <span key={i} style={{
+                fontSize: "12px", color: "#333", background: info.bg,
+                border: `1px solid ${info.bd}`, borderRadius: "99px", padding: "5px 12px",
+              }}>{f}</span>
+            ))}
+          </div>
+
+          <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--herbs-gold)", marginBottom: "8px", letterSpacing: "0.05em" }}>
+            気をつけたいこと
+          </div>
+          <div className="space-y-2">
+            {info.cautions.map((c, i) => (
+              <div key={i} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+                <span style={{ color: "var(--herbs-gold)", fontSize: "10px", lineHeight: "1.9" }}>●</span>
+                <span style={{ fontSize: "13px", color: "#333", lineHeight: 1.8 }}>{c}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* 髪・頭皮トラブル別アドバイス */}
@@ -340,27 +423,6 @@ export default function ResultPage() {
           </div>
         )}
 
-        {/* 来店目的に合わせたメッセージ */}
-        {visitReason && (
-          <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: info.bg, border: `1px solid ${info.bd}` }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: info.color, marginBottom: "8px" }}>
-              本日のご来店目的：{visitReason}
-            </div>
-            <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.8 }}>
-              {visitReason.includes("抜け毛") || visitReason.includes("薄毛") ?
-                "抜け毛・薄毛は、頭皮のめぐりと栄養、そしてストレスが重なって表れやすいお悩みです。頭皮環境を整えることから始めましょう。" :
-                visitReason.includes("うねり") || visitReason.includes("くせ毛") ?
-                "くせ毛・うねりは外胚葉型に出やすい傾向です。頭皮と髪の水分バランスを整えることで、扱いやすさが変わってきます。" :
-                visitReason.includes("カラー") ?
-                "カラー後は頭皮のバリアが一時的に低下します。数日後からのやさしいケアで、健やかな状態に戻していきましょう。" :
-                visitReason.includes("白髪") ?
-                "白髪は、鉄・ビタミンの不足やめぐりの低下と関わりやすいお悩みです。食と血行の両面から見直していきましょう。" :
-                "お客様のご要望に合わせた最適なケアプランをスタッフよりご提案いたします。"
-              }
-            </p>
-          </div>
-        )}
-
         {/* アクション */}
         <div className="space-y-3 animate-fade-in-up">
           <button
@@ -382,7 +444,7 @@ export default function ResultPage() {
               border: "1.5px solid var(--herbs-light)", borderRadius: "12px",
               fontSize: "14px", cursor: "pointer",
             }}>
-            もう一度診断する
+            もう一度入力する
           </button>
         </div>
 
