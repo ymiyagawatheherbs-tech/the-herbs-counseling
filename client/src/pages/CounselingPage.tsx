@@ -45,6 +45,7 @@ interface FormData {
   hasIllness: boolean;
   illnessDetail: string;
   visitReason: string;
+  visitReasonOther: string;
   request: string;
   consent: boolean;
 }
@@ -59,7 +60,7 @@ const initialForm: FormData = {
   hasPollen: false, pollenTypes: [],
   lifestyleHabits: [], foodNotes: "",
   hasIllness: false, illnessDetail: "",
-  visitReason: "", request: "", consent: false,
+  visitReason: "", visitReasonOther: "", request: "", consent: false,
 };
 
 // ── チェックボックスチップコンポーネント ─────────────────────────────────────
@@ -151,6 +152,7 @@ export default function CounselingPage() {
         pollenTypes: form.pollenTypes.join(","),
         colorHistory: form.colorHistory,
         visitReason: form.visitReason,
+        visitReasonOther: form.visitReasonOther,
         hairChildType: form.hairChildType,
         foodNotes: form.foodNotes,
       });
@@ -168,7 +170,7 @@ export default function CounselingPage() {
     "体質傾向チェック",
     "身体の症状",
     "髪・生活習慣",
-    "病歴・ご要望",
+    "現在気になること・ご要望",
   ];
 
   return (
@@ -416,35 +418,10 @@ export default function CounselingPage() {
         {/* ── Section 5: 病歴・ご要望 ── */}
         {section === 5 && (
           <div className="animate-fade-in-up space-y-5">
-            <SectionHeader title="病歴・ご要望" subtitle="最後にご要望をお聞かせください" />
+            <SectionHeader title="現在気になること・ご要望" subtitle="最後にご要望をお聞かせください" />
 
-            {/* 病歴 */}
-            <Card title="現在または過去の病歴・手術歴はありますか？">
-              <div className="flex gap-3 mb-3">
-                {[{ v: false, l: "なし" }, { v: true, l: "あり" }].map(opt => (
-                  <button key={String(opt.v)} type="button"
-                    onClick={() => setForm(f => ({ ...f, hasIllness: opt.v }))}
-                    style={{
-                      padding: "8px 20px", borderRadius: "20px",
-                      border: `1.5px solid ${form.hasIllness === opt.v ? "var(--herbs-green)" : "var(--herbs-light)"}`,
-                      background: form.hasIllness === opt.v ? "var(--herbs-green)" : "var(--herbs-white)",
-                      color: form.hasIllness === opt.v ? "white" : "var(--herbs-muted)",
-                      fontSize: "13px", cursor: "pointer",
-                    }}>
-                    {opt.l}
-                  </button>
-                ))}
-              </div>
-              {form.hasIllness && (
-                <textarea value={form.illnessDetail}
-                  onChange={e => setForm(f => ({ ...f, illnessDetail: e.target.value }))}
-                  placeholder="病名・時期などをご記入ください" rows={3}
-                  style={{ ...inputStyle, resize: "vertical" }} />
-              )}
-            </Card>
-
-            {/* 来店動機 */}
-            <Card title="本日のご来店・ご利用のきっかけ">
+            {/* 現在気になること */}
+            <Card title="現在、気になること">
               <div className="flex flex-wrap gap-2">
                 {VISIT_REASONS.map(r => (
                   <button key={r} type="button"
@@ -460,6 +437,12 @@ export default function CounselingPage() {
                   </button>
                 ))}
               </div>
+              {form.visitReason === "その他" && (
+                <textarea value={form.visitReasonOther ?? ""}
+                  onChange={e => setForm(f => ({ ...f, visitReasonOther: e.target.value }))}
+                  placeholder="具体的に教えてください（例：最近髪のまとまりが悪くなった、など）" rows={3}
+                  style={{ ...inputStyle, resize: "vertical", marginTop: "12px" }} />
+              )}
             </Card>
 
             {/* ご要望 */}

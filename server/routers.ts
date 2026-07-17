@@ -53,6 +53,7 @@ const CounselingSessionInput = z.object({
   hasIllness: z.boolean().optional(),
   illnessDetail: z.string().optional(),
   visitReason: z.string().optional(),
+  visitReasonOther: z.string().optional(),
   request: z.string().optional(),
   accessChannel: z.enum(["store", "sns", "line", "web", "other"]).default("other"),
   partnerSalonId: z.number().int().optional(),
