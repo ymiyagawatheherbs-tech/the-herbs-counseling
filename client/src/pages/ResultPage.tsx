@@ -1,4 +1,5 @@
 import { useLocation } from "wouter";
+import { MEDICATION_CATEGORIES, PREGNANCY_NOTE } from "@shared/counselingData";
 
 const ILLUST_URLS: Record<string, string> = {
   ecto: "/manus-storage/herbs-ecto_e909f0ad.png",
@@ -139,24 +140,34 @@ function buildHairTroubleAdvice(troubles: string[]): { trouble: string; advice: 
 
 export default function ResultPage() {
   const [, navigate] = useLocation();
-  const params = new URLSearchParams(window.location.search);
-  const ecto = parseInt(params.get("ecto") || "0");
-  const meso = parseInt(params.get("meso") || "0");
-  const endo = parseInt(params.get("endo") || "0");
-  const name = decodeURIComponent(params.get("name") || "");
-  const type = (params.get("type") || "unknown") as keyof typeof TYPE_INFO;
-  const channel = params.get("ch") || "web";
 
-  // アンケート結果
-  const symptoms = params.get("symptoms") ? params.get("symptoms")!.split(",").filter(Boolean) : [];
-  const lifestyle = params.get("lifestyle") ? params.get("lifestyle")!.split(",").filter(Boolean) : [];
-  const hairTroubles = params.get("hairTroubles") ? params.get("hairTroubles")!.split(",").filter(Boolean) : [];
-  const hasMedication = params.get("hasMedication") === "true";
-  const hasPollen = params.get("hasPollen") === "true";
-  const pollenTypes = params.get("pollenTypes") ? params.get("pollenTypes")!.split(",").filter(Boolean) : [];
-  const colorHistory = params.get("colorHistory") || "";
-  const hairChildType = params.get("hairChildType") || "";
-  const foodNotes = params.get("foodNotes") || "";
+  // ── 結果データは sessionStorage から取得（URLに個人情報を載せない）──────
+  const params = new URLSearchParams(window.location.search);
+  const stored = (() => {
+    try {
+      const raw = sessionStorage.getItem("herbs_result");
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  })();
+
+  const ecto = stored?.ecto ?? parseInt(params.get("ecto") || "0");
+  const meso = stored?.meso ?? parseInt(params.get("meso") || "0");
+  const endo = stored?.endo ?? parseInt(params.get("endo") || "0");
+  const name: string = stored?.name ?? "";
+  const managementNo: string = stored?.managementNo ?? "";
+  const type = (stored?.type || params.get("type") || "unknown") as keyof typeof TYPE_INFO;
+  const channel: string = stored?.ch ?? params.get("ch") ?? "web";
+
+  // アンケート結果（すべて端末内のデータ）
+  const symptoms: string[] = stored?.symptoms ?? [];
+  const lifestyle: string[] = stored?.lifestyle ?? [];
+  const hairTroubles: string[] = stored?.hairTroubles ?? [];
+  const medications: string[] = stored?.medications ?? [];
+  const isPregnant: boolean = stored?.isPregnant ?? false;
+  const hasPollen: boolean = stored?.hasPollen ?? false;
+  const pollenTypes: string[] = stored?.pollenTypes ?? [];
+  const foodNotes: string = stored?.foodNotes ?? "";
+  const request: string = stored?.request ?? "";
 
   const total = ecto + meso + endo || 1;
   const info = TYPE_INFO[type] || TYPE_INFO.unknown;
@@ -167,20 +178,8 @@ export default function ResultPage() {
     { label: "内胚葉型", score: endo, color: "#3A7A50", bg: "#EDF5EF" },
   ];
 
-  // 症状カテゴリを集計
-  const symptomCategories = ["筋肉系", "呼吸器系", "循環器系", "消化器系", "泌尿器系", "婦人科系", "その他"];
-  const activeCategories = symptomCategories.filter(cat => {
-    const catSymptoms: Record<string, string[]> = {
-      "筋肉系": ["肩こり", "首の痛み", "腰痛", "しびれ"],
-      "呼吸器系": ["気管支炎", "鼻炎", "せき", "ぜんそく", "花粉症", "呼吸が浅い", "風邪をひきやすい"],
-      "循環器系": ["貧血", "低血圧", "静脈瘤", "心臓病", "高血圧", "糖尿病", "中性脂肪"],
-      "消化器系": ["胃痛", "胃酸過多", "潰瘍", "肝臓不調", "便秘", "下痢", "お腹の張り"],
-      "泌尿器系": ["膀胱炎", "腎結石", "腎臓病", "むくみ"],
-      "婦人科系": ["生理痛", "生理不順", "子宮内膜症", "子宮筋腫", "妊娠の可能性"],
-      "その他": ["アレルギー", "アトピー", "頭痛", "冷え性", "関節炎", "リウマチ", "耳鳴り", "不眠", "坐骨神経痛"],
-    };
-    return symptoms.some(s => catSymptoms[cat]?.includes(s));
-  });
+  // 該当したお薬の注意文（端末内でのみ表示）
+  const medicationNotes = MEDICATION_CATEGORIES.filter(m => medications.includes(m.label));
 
   const lifestyleAdvices = buildLifestyleAdvice(lifestyle);
   const hairTroubleAdvices = buildHairTroubleAdvice(hairTroubles);
@@ -207,7 +206,7 @@ export default function ResultPage() {
         <div className="text-center mb-8 animate-fade-in-up">
           <div style={{ fontSize: "32px", marginBottom: "8px" }}>✨</div>
           <h2 style={{ fontSize: "18px", fontWeight: 600, color: "var(--herbs-green)", marginBottom: "4px" }}>
-            {name ? `${name} 様の` : ""}体質傾向をお読みしました
+            {name ? `${name} 様の` : managementNo ? `${managementNo} の` : ""}体質傾向をお読みしました
           </h2>
           <p style={{ fontSize: "13px", color: "var(--herbs-muted)" }}>
             カウンセリングシートをご記入いただきありがとうございます
@@ -305,6 +304,33 @@ export default function ResultPage() {
           </p>
         </div>
 
+        {/* お薬・妊娠に関する注意（端末内でのみ表示・サーバー未送信） */}
+        {(medicationNotes.length > 0 || isPregnant) && (
+          <div className="rounded-2xl p-6 mb-4" style={{ background: "#FFF8F0", border: "1px solid #E8C9A0" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: "#A66A2C", marginBottom: "10px" }}>
+              ⚠ ハーブ・精油をお使いになる前に
+            </div>
+            <p style={{ fontSize: "12px", color: "var(--herbs-muted)", lineHeight: 1.8, marginBottom: "14px" }}>
+              下記に該当されています。ハーブティー・サプリメント・精油をお使いになる前に、
+              かかりつけの医師・薬剤師にご確認ください。
+            </p>
+            <div className="space-y-3">
+              {isPregnant && (
+                <div style={{ paddingLeft: "12px", borderLeft: "3px solid #E8C9A0" }}>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#A66A2C", marginBottom: "3px" }}>妊娠中・授乳中</div>
+                  <p style={{ fontSize: "12px", color: "#333", lineHeight: 1.8 }}>{PREGNANCY_NOTE}</p>
+                </div>
+              )}
+              {medicationNotes.map(m => (
+                <div key={m.label} style={{ paddingLeft: "12px", borderLeft: "3px solid #E8C9A0" }}>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#A66A2C", marginBottom: "3px" }}>{m.label}</div>
+                  <p style={{ fontSize: "12px", color: "#333", lineHeight: 1.8 }}>{m.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* おすすめの食材・気をつけたいこと */}
         <div className="rounded-2xl p-6 mb-4" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
           <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "14px" }}>
@@ -355,23 +381,6 @@ export default function ResultPage() {
           </div>
         )}
 
-        {/* 身体の症状に基づくアドバイス */}
-        {activeCategories.length > 0 && (
-          <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--herbs-green)", marginBottom: "12px" }}>
-              身体の症状から見たケアポイント
-            </div>
-            <div className="space-y-3">
-              {activeCategories.map(cat => (
-                <div key={cat} style={{ padding: "12px 14px", background: "#FBF9F6", borderRadius: "10px", borderLeft: `3px solid ${info.color}` }}>
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: info.color, marginBottom: "4px" }}>{cat}</div>
-                  <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.8 }}>{SYMPTOM_ADVICE[cat]}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* 生活習慣アドバイス */}
         {lifestyleAdvices.length > 0 && (
           <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: "var(--herbs-white)", border: "1px solid var(--herbs-light)" }}>
@@ -384,41 +393,6 @@ export default function ResultPage() {
                   <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.8 }}>{advice}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        )}
-
-        {/* 注意事項（服薬・花粉症・カラー歴） */}
-        {(hasMedication || hasPollen || colorHistory) && (
-          <div className="rounded-2xl p-5 mb-6 animate-fade-in-up" style={{ background: "#FFF8F0", border: "1px solid #F0D8B8" }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: "#A0622A", marginBottom: "12px" }}>
-              施術前にご確認いただきたい事項
-            </div>
-            <div className="space-y-3">
-              {hasMedication && (
-                <div style={{ padding: "10px 14px", background: "white", borderRadius: "8px" }}>
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#A0622A", marginBottom: "4px" }}>お薬・サプリメントについて</div>
-                  <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.8 }}>
-                    現在お薬やサプリメントを服用中とのことです。特にステロイド・ホルモン剤・抗ガン剤は髪質に影響することがあります。施術前にスタッフへお申し出ください。
-                  </p>
-                </div>
-              )}
-              {hasPollen && pollenTypes.length > 0 && (
-                <div style={{ padding: "10px 14px", background: "white", borderRadius: "8px" }}>
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#A0622A", marginBottom: "4px" }}>花粉症・植物アレルギーについて</div>
-                  <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.8 }}>
-                    {pollenTypes.join("・")}の花粉症がございます。植物由来の成分を使ったケアの前には、パッチテストをおすすめします。
-                  </p>
-                </div>
-              )}
-              {colorHistory && (
-                <div style={{ padding: "10px 14px", background: "white", borderRadius: "8px" }}>
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#A0622A", marginBottom: "4px" }}>カラー・パーマ歴について</div>
-                  <p style={{ fontSize: "13px", color: "#555", lineHeight: 1.8 }}>
-                    カラー・パーマの施術歴：{colorHistory}。アルカリカラー・パーマ前日は洗髪を避け、頭皮のバリア機能を高めることをお勧めします。
-                  </p>
-                </div>
-              )}
             </div>
           </div>
         )}
