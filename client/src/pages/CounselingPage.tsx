@@ -106,7 +106,9 @@ export default function CounselingPage() {
   const { session } = useSession();
   const submitMutation = trpc.counseling.submit.useMutation();
   const params = new URLSearchParams(window.location.search);
-  const channel = (params.get("ch") || "web") as "store" | "sns" | "line" | "web" | "other";
+  const channel = (params.get("ch") || "web") as "store" | "sns" | "line" | "web" | "public" | "other";
+  // 一般公開（LPなど）からの流入。サロンのカルテ用途と表示を分ける
+  const isPublic = channel === "public";
 
   const totalSections = 5;
   const progress = (section / totalSections) * 100;
@@ -222,22 +224,28 @@ export default function CounselingPage() {
         {/* ── Section 1: お客様情報 ── */}
         {section === 1 && (
           <div className="animate-fade-in-up">
-            <SectionHeader title="お客様情報" subtitle="カルテ用にご記入ください" />
+            <SectionHeader
+              title={isPublic ? "はじめに" : "お客様情報"}
+              subtitle={isPublic ? "結果の表示に使用します" : "カルテ用にご記入ください"}
+            />
             <div className="rounded-xl p-4 mb-4" style={{ background: "var(--herbs-cream)", border: "1px solid var(--herbs-light)" }}>
               <p style={{ fontSize: "12px", color: "var(--herbs-green)", lineHeight: 1.8 }}>
-                お名前・生年月日は<strong>この端末の中だけ</strong>で使用し、サーバーには送信されません。
-                結果ページの印刷・PDF保存で、サロンのカルテとしてご活用ください。
+                {isPublic
+                  ? "お名前・生年月日は、この端末の中だけで結果の表示に使われます。サーバーには送信されませんので、ニックネームでも構いません。"
+                  : "お名前・生年月日はこの端末の中だけで使用し、サーバーには送信されません。結果ページの印刷・PDF保存で、サロンのカルテとしてご活用ください。"}
               </p>
             </div>
             <div className="space-y-4">
-              <FormField label="お名前 *" required>
+              <FormField label={isPublic ? "お名前・ニックネーム" : "お名前 *"} required={!isPublic}>
                 <input type="text" value={form.clientName} onChange={e => setForm(f => ({ ...f, clientName: e.target.value }))}
-                  placeholder="山田 花子" style={inputStyle} />
+                  placeholder={isPublic ? "ニックネームでも構いません" : "山田 花子"} style={inputStyle} />
               </FormField>
+              {!isPublic && (
               <FormField label="ふりがな">
                 <input type="text" value={form.clientKana} onChange={e => setForm(f => ({ ...f, clientKana: e.target.value }))}
                   placeholder="やまだ はなこ" style={inputStyle} />
               </FormField>
+              )}
               <FormField label="生年月日">
                 <input type="date" value={form.clientDob} onChange={e => setForm(f => ({ ...f, clientDob: e.target.value }))}
                   style={inputStyle} />
@@ -247,10 +255,12 @@ export default function CounselingPage() {
                   </p>
                 )}
               </FormField>
+              {!isPublic && (
               <FormField label="管理番号（サロン用・任意）">
                 <input type="text" value={form.managementNo} onChange={e => setForm(f => ({ ...f, managementNo: e.target.value }))}
                   placeholder="例：A-001（サロンのカルテ番号など）" style={inputStyle} />
               </FormField>
+              )}
             </div>
           </div>
         )}
@@ -506,7 +516,7 @@ export default function CounselingPage() {
           {section < totalSections ? (
             <button
               onClick={() => {
-                if (section === 1 && !form.clientName.trim()) {
+                if (section === 1 && !isPublic && !form.clientName.trim()) {
                   alert("お名前をご入力ください");
                   return;
                 }

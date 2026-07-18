@@ -157,6 +157,7 @@ export default function ResultPage() {
   const managementNo: string = stored?.managementNo ?? "";
   const type = (stored?.type || params.get("type") || "unknown") as keyof typeof TYPE_INFO;
   const channel: string = stored?.ch ?? params.get("ch") ?? "web";
+  const isPublic = channel === "public";
 
   // アンケート結果（すべて端末内のデータ）
   const symptoms: string[] = stored?.symptoms ?? [];
@@ -396,6 +397,49 @@ export default function ResultPage() {
             </div>
           </div>
         )}
+
+        {/* 一般公開向け：次の一歩への導線 */}
+        {isPublic && (
+          <div className="rounded-2xl p-6 mb-4 no-print" style={{ background: "var(--herbs-green)", color: "var(--herbs-white)" }}>
+            <div style={{ fontSize: "15px", fontWeight: 700, marginBottom: "8px" }}>
+              もっと詳しく知りたい方へ
+            </div>
+            <p style={{ fontSize: "13px", lineHeight: 1.9, opacity: 0.9, marginBottom: "18px" }}>
+              体質は、生まれ持った「からだの設計図」です。ご自身に合ったケアを一緒に見つけていきませんか。
+            </p>
+            <div className="space-y-2">
+              <a href="https://www.the-herbs.co.jp/" target="_blank" rel="noopener"
+                 style={{ display: "block", textAlign: "center", padding: "12px",
+                          background: "var(--herbs-white)", color: "var(--herbs-green)",
+                          borderRadius: "10px", fontSize: "13px", fontWeight: 700, textDecoration: "none" }}>
+                サロンでカウンセリングを受ける →
+              </a>
+              <a href="https://human.the-herbs.co.jp/" target="_blank" rel="noopener"
+                 style={{ display: "block", textAlign: "center", padding: "12px",
+                          background: "transparent", color: "var(--herbs-white)",
+                          border: "1px solid rgba(255,255,255,0.4)",
+                          borderRadius: "10px", fontSize: "13px", textDecoration: "none" }}>
+                体質学を学ぶ（美容のお仕事の方へ）→
+              </a>
+              <a href="https://lin.ee/PD3gnHS" target="_blank" rel="noopener"
+                 style={{ display: "block", textAlign: "center", padding: "12px",
+                          background: "transparent", color: "var(--herbs-white)",
+                          border: "1px solid rgba(255,255,255,0.4)",
+                          borderRadius: "10px", fontSize: "13px", textDecoration: "none" }}>
+                公式LINEで相談する →
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* 注記 */}
+        <div className="rounded-xl p-4 mb-4" style={{ background: "var(--herbs-cream)", border: "1px solid var(--herbs-light)" }}>
+          <p style={{ fontSize: "11px", color: "var(--herbs-muted)", lineHeight: 1.9 }}>
+            本結果は、植物美容科学®の体質学にもとづく見立てであり、医療の診断ではありません。
+            体質は、美容・健康維持の観点から人を理解するための考え方です。
+            気になる症状・急な変化があるときは、医療機関にご相談ください。
+          </p>
+        </div>
 
         {/* アクション */}
         <div className="space-y-3 animate-fade-in-up">
