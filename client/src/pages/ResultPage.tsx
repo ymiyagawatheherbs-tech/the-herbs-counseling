@@ -404,11 +404,17 @@ export default function ResultPage() {
             <div style={{ fontSize: "15px", fontWeight: 700, marginBottom: "8px" }}>
               もっと詳しく知りたい方へ
             </div>
-            <p style={{ fontSize: "13px", lineHeight: 1.9, opacity: 0.9, marginBottom: "18px" }}>
+            <p style={{ fontSize: "13px", lineHeight: 1.9, opacity: 0.9, marginBottom: "14px" }}>
               体質は、生まれ持った「からだの設計図」です。ご自身に合ったケアを一緒に見つけていきませんか。
             </p>
+            <p style={{ fontSize: "12px", lineHeight: 1.9, marginBottom: "18px",
+                        padding: "10px 12px", borderRadius: "8px",
+                        background: "rgba(255,255,255,0.12)",
+                        border: "1px solid rgba(255,255,255,0.25)" }}>
+              体質にもとづくパーソナルカウンセリングは、現在 <strong>THE HERBS 植物美容サロン</strong> でのみお受けいただけます。
+            </p>
             <div className="space-y-2">
-              <a href="https://www.the-herbs.co.jp/" target="_blank" rel="noopener"
+              <a href="https://booking.scalp-labo.jp/booking.html" target="_blank" rel="noopener"
                  style={{ display: "block", textAlign: "center", padding: "12px",
                           background: "var(--herbs-white)", color: "var(--herbs-green)",
                           borderRadius: "10px", fontSize: "13px", fontWeight: 700, textDecoration: "none" }}>
@@ -421,7 +427,7 @@ export default function ResultPage() {
                           borderRadius: "10px", fontSize: "13px", textDecoration: "none" }}>
                 体質学を学ぶ（美容のお仕事の方へ）→
               </a>
-              <a href="https://lin.ee/PD3gnHS" target="_blank" rel="noopener"
+              <a href="https://lin.ee/Ngyp3rK" target="_blank" rel="noopener"
                  style={{ display: "block", textAlign: "center", padding: "12px",
                           background: "transparent", color: "var(--herbs-white)",
                           border: "1px solid rgba(255,255,255,0.4)",
